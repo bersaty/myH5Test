@@ -15,7 +15,22 @@ $(function () {
     })
 
     $("#video").bind('timeupdate',function(){
-        console.log($("#video").currentTime);
+        // console.log("current time = "+this.currentTime+" totalTime = "+this.duration);
+
+        if(this.duration - this.currentTime < 1){
+            this.currentTime = 2;
+            this.pause();
+        }
+
+    });
+    $("#video").bind('play',function(){
+        console.log("play ～～～");
+        var videoHeight = $(".videobox").outerHeight();
+        var bannerHeight = $(".top-img").outerHeight();
+
+        console.log("play ～～～videoHeight = "+videoHeight);
+        $(".weui-panel__bd").css("marginTop",20 + (bannerHeight>videoHeight?bannerHeight:videoHeight));
+
     });
     // $("#video").bind('loadeddata',captureImage);
     // $("#video").attr("crossOrigin","Anonymous");
@@ -30,12 +45,12 @@ $(function () {
 var playVideo = function(url,img_url){
     img_url == undefined ? default_img:img_url;
     $("#video").show();
-    // $(".video-info").show();
+    $(".video-info").show();
     // $("#audio").hide();
     // $(".top-img").hide();
-    // $("#video").attr("src",url)
+    $("#video").attr("src",url)
     // $("#video").attr("poster",img_url)
-    // $("#video").load()
+    $("#video").load()
 };
 
 var captureImage = function() {
@@ -67,24 +82,32 @@ function itemCilck(symbol) {
 
     // $('.video').attr('src', url);
     // $("#video").attr('src', url);
-    index = symbol.lastIndexOf(".");
-    if(index == -1 && symbol.length !== 0){
+    var dot_index = symbol.lastIndexOf(".");
+    //为文件夹
+    if(dot_index == -1 && symbol.length !== 0){
         goList(symbol);
         return;
     }
-    suffix  = symbol.substring(index + 1);
-    console.log("itemclick click = "+symbol);
+    suffix  = symbol.substring(dot_index + 1);
+    // console.log("itemclick index / = "+symbol.lastIndexOf("/"));
+    // console.log("itemclick leng = "+symbol.length);
+
+    // console.log("itemclick symbol = "+symbol.replace(/[//]/g,"$'"));
+    // console.log("itemclick leng = "+symbol.substring(symbol.lastIndexOf("/")+1,symbol.length));
+
     if(suffix !== null || suffix !== ''){
         var url = client.getObjectUrl(symbol,Common.DOMAIN);
         console.log("url = "+url);
         // 开始播放视频
         if(tabNum==0){
             playVideo(url)
+            $(".video-info").html(symbol.substring(symbol.lastIndexOf("/")+1,symbol.length));
         }else if(tabNum==1){
-        //     $(".top-img").hide();
-        //     $(".audio-box").show();
-        //     $("#video").hide();
-        //     $("#audio").attr("src",url)
+            $(".top-img").hide();
+            $(".audio-box").show();
+            $(".video-info").hide();
+            $("#video").hide();
+            $("#audio").attr("src",url)
         }
     }else{
         // $(".top-img").show();
@@ -93,13 +116,13 @@ function itemCilck(symbol) {
     }
     // if(symbol.e)
 
-    var videoHeight = $(".videobox").outerHeight();
-    var bannerHeight = $(".top-img").outerHeight();
+    // var videoHeight = $(".videobox").outerHeight();
+    // var bannerHeight = $(".top-img").outerHeight();
 
     // $(".weui-panel__bd").attr("margin-top",bannerHeight>videoHeight?bannerHeight:videoHeight);
 
-    console.log("video height = "+$(".videobox").outerHeight());
-    console.log("banner height = "+$(".top-img").outerHeight());
+    // console.log("video height = "+$(".videobox").outerHeight());
+    // console.log("banner height = "+$(".top-img").outerHeight());
 }
 
 /** ======================================风格线=================================== **/
@@ -122,14 +145,16 @@ function courseObjectList(tabNum,prefix) {
             var newCentent = "";
 
             if(dataList !== null && dataList.length > 1){
-                var videoHeight = $(".videobox").outerHeight();
-                var bannerHeight = $(".top-img").outerHeight();
-                 
+                // var videoHeight = $(".videobox").outerHeight();
+                // var bannerHeight = $(".top-img").outerHeight();
+                // console.log("courseObjectList ～～～videoHeight = "+videoHeight);
+
                 //  $("#gab").height(bannerHeight>videoHeight?bannerHeight:videoHeight);
                 //  $("#gab").attr("position","relative");
-                $(".weui-panel__bd").css("marginTop",20 + (bannerHeight>videoHeight?bannerHeight:videoHeight));
+                // $(".weui-panel__bd").css("marginTop",20 + (bannerHeight>videoHeight?bannerHeight:videoHeight));
                 //  $(".weui-tab_video_bd").css("marginTop",bannerHeight>videoHeight?bannerHeight:videoHeight);
     
+                $(".video-info").html(dataList[1].name.substring(dataList[1].name.lastIndexOf("/")+1,dataList[1].name.length));
                 playVideo(client.getObjectUrl(dataList[1].name,Common.DOMAIN))
                 // $(".top-img").hide();
                 // $(".audio-box").hide();
@@ -157,17 +182,12 @@ function courseObjectList(tabNum,prefix) {
             }
             weuiHideLoading();
 
-            console.log("video height = "+$(".videobox").outerHeight());
-            console.log("banner height = "+$(".top-img").outerHeight());
+            // console.log("video height = "+$(".videobox").outerHeight());
+            // console.log("banner height = "+$(".top-img").outerHeight());
             var videoHeight = $(".videobox").outerHeight();
             var bannerHeight = $(".top-img").outerHeight();
-        
-             
-            //  $("#gab").height(bannerHeight>videoHeight?bannerHeight:videoHeight);
-            //  $("#gab").attr("position","relative");
-            $(".weui-panel__bd").css("marginTop",(bannerHeight>videoHeight?bannerHeight:videoHeight));
-            //  $(".weui-tab_video_bd").css("marginTop",bannerHeight>videoHeight?bannerHeight:videoHeight);
-
+            console.log("courseObjectList ～～～videoHeight = "+videoHeight);
+            $(".weui-panel__bd").css("marginTop",20 + (bannerHeight>videoHeight?bannerHeight:videoHeight));
 
       })
     //   .catch(function (err) {
@@ -191,22 +211,35 @@ function createListItem(list,isFolder,prefix){
         if(isFolder){
             // name = list[i].replace(/[//]/g,'');
             name = list[i];
+            if(name.replace(prefix,'') !== ''){
+                var newItem = '<a style="border-bottom: 6px solid #EEEEEE;;" href="javascript:itemCilck(&quot;' + name + '&quot;);" class="weui-media-box weui-media-box_appmsg">\n' +
+                    // '<div class="weui-media-box__hd">\n' +
+                    // '<img class="weui-media-box__thumb" src="' + default_img + '" alt="正在加载...">\n' +
+                    // '</div>\n' +
+                    '<div class="weui-media-box__bd">\n' +
+                    '<p style="word-break:break-all">' + name.replace(prefix,'')+'</p>\n' +
+                    // '<p class="weui-media-box__desc">共 ' + list[i].count + ' 讲</p>\n' +
+                    '</div>\n' +
+                    '</a>'
+                newCentent += newItem;
+            }
         }else{
             name = list[i].name;
+            if(name.replace(prefix,'') !== ''){
+                var newItem = '<a style="border-bottom: 6px solid #EEEEEE;;" href="javascript:itemCilck(&quot;' + name + '&quot;);" class="weui-media-box weui-media-box_appmsg">\n' +
+                    '<div class="weui-media-box__hd">\n' +
+                    '<img class="weui-media-box__thumb" src="' + default_img + '" alt="正在加载...">\n' +
+                    '</div>\n' +
+                    '<div class="weui-media-box__bd">\n' +
+                    '<p style="word-break:break-all">' + name.replace(prefix,'')+'</p>\n' +
+                    // '<p class="weui-media-box__desc">共 ' + list[i].count + ' 讲</p>\n' +
+                    '</div>\n' +
+                    '</a>'
+                newCentent += newItem;
+            }
         }
-        console.log(" prefix "+i +" = "+name);
-        if(name.replace(prefix,'') !== ''){
-            var newItem = '<a style="border-bottom: 6px solid #EEEEEE;;" href="javascript:itemCilck(&quot;' + name + '&quot;);" class="weui-media-box weui-media-box_appmsg">\n' +
-                '<div class="weui-media-box__hd">\n' +
-                '<img class="weui-media-box__thumb" src="' + default_img + '" alt="正在加载...">\n' +
-                '</div>\n' +
-                '<div class="weui-media-box__bd">\n' +
-                '<p style="word-break:break-all">' + name.replace(prefix,'')+'</p>\n' +
-                // '<p class="weui-media-box__desc">共 ' + list[i].count + ' 讲</p>\n' +
-                '</div>\n' +
-                '</a>'
-            newCentent += newItem;
-        }
+        // console.log(" prefix "+i +" = "+name);
+        
     }
     return newCentent;
 }

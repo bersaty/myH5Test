@@ -79,9 +79,9 @@ function createListItem(list,isFolder,prefix){
         console.log(" prefix "+i +" = "+name);
         if(name.replace(prefix,'') !== ''){
             var newItem = '<a href="javascript:goList(&quot;' + name + '&quot;);" class="weui-media-box weui-media-box_appmsg">\n' +
-                '<div class="weui-media-box__hd">\n' +
-                '<img class="weui-media-box__thumb" src="' + default_img + '" alt="正在加载...">\n' +
-                '</div>\n' +
+                // '<div class="weui-media-box__hd">\n' +
+                // '<img class="weui-media-box__thumb" src="' + default_img + '" alt="正在加载...">\n' +
+                // '</div>\n' +
                 '<div class="weui-media-box__bd">\n' +
                 '<h4 class="weui-media-box__title">' + name.replace(prefix,'')+'</h4>\n' +
                 // '<p class="weui-media-box__desc">共 ' + list[i].count + ' 讲</p>\n' +

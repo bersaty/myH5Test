@@ -31,7 +31,8 @@
 
 .video-info{
     display: none;
-    font-size:10px;
+    color:blue;
+    font-size:15px;
     background-color:white;
     text-align:center;
     height: 20px;
@@ -40,8 +41,11 @@
 
 .videobox{
     /* margin-top: 6.1rem; */
+    background-color:white;
     position: fixed;
     z-index: 500;
+    border-bottom: 1px solid #e5e5e5;
+    width: 100%;
 }
 
 .weui-media-box_appmsg .weui-media-box__hd{
