@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+ 
+        figcaption {
+            text-align: center;
+            line-height: 150px;
+            font-family: "Microsoft Yahei";
+            font-size: 24px;
+        }
+ 
+        .player {
+            width: 720px;
+            height: 360px;
+            margin: 10px auto;
+            border: 1px solid #000;
+            background-color: #000;
+            position: relative;
+            border-radius: 6px;
+        }
+ 
+        .player video {
+            width: 720px;
+            height: 360px;
+        }
+ 
+        .controls {
+            width: 700px;
+            height: 40px;
+            background-color: rgba(255,255,0,0.3);
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            border-radius: 10px;
+        }
+ 
+        .switch {
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background-color: red;
+            left: 10px;
+            top: 9px;
+            border-radius: 50%;
+        }
+ 
+        .progress {
+            width: 432px;
+            height: 10px;
+            position: absolute;
+            background-color: rgba(255,255,255,0.4);
+            left: 40px;
+            top: 15px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+ 
+        .curr-progress {
+            width: 0%;
+            height: 100%;
+            background-color: #fff;
+        }
+ 
+        .time {
+            width: 120px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+            font-size: 12px;
+            color: #fff;
+            position: absolute;
+            left: 510px;
+            top: 10px;
+        }
+ 
+        .extend {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            right: 10px;
+            top: 10px;
+        }
+ 
+    </style>
+</head>
+<body>
+    <figure>  <!-- H5的语义标签 -->
+        <figcaption>视频案例</figcaption>
+        <div class="player">
+            <video src="video/test.mp4"></video>
+            <div class="controls">
+                <a href="#" class="switch"></a>
+                <div class="progress">
+                    <div class="curr-progress"></div>
+                </div>
+                <div class="time">
+                    <span class="curr-time">00:00:00</span>/
+                    <span class="total-time">00:00:00</span>
+                </div>
+                <a href="#" class="extend"></a>
+            </div>
+        </div>
+    </figure>
+<script>
+ 
+    var video = document.querySelector('video');
+    var playBtn = document.querySelector('.switch');
+    var currProgress = document.querySelector('.curr-progress');
+    var currTime = document.querySelector('.curr-time');
+    var totalTime = document.querySelector('.total-time');
+    var extend = document.querySelector('.extend');
+    var tTime = 0;
+    
+    playBtn.onclick = function() {
+        if(video.paused){  // 如果视频是暂停的
+            video.play();    //play()播放  load()重新加载  pause()暂停
+        }else{
+            video.pause();
+        }
+    }
+ 
+    //当视频能播放(已经通过网络加载完成)时
+    video.oncanplay = function() {
+        tTime = video.duration;  //获取视频总时长(单位秒)
+        var tTimeStr = getTimeStr(tTime);
+        totalTime.innerHTML = tTimeStr;
+    }
+ 
+    //当视频当前播放时间更新的时候
+    video.ontimeupdate = function() {
+        var cTime = video.currentTime;  //获取当前播放时间 
+        var cTimeStr = getTimeStr(cTime);
+        console.log(cTimeStr);
+        currTime.innerHTML = cTimeStr;
+ 
+        currProgress.style.width = cTime/tTime*100+"%";
+    }
+ 
+    extend.onclick = function() {
+        video.webkitRequestFullScreen();  //视频全屏
+    }
+ 
+ 
+ 
+    //将以秒为单位的时间变成“00:00:00”格式的字符串
+    function getTimeStr(time) {
+        var h = Math.floor(time/3600);
+        var m = Math.floor(time%3600/60);
+        var s = Math.floor(time%60);
+        h = h>=10?h:"0"+h;
+        m = m>=10?m:"0"+m;
+        s = s>=10?s:"0"+s;
+        return h+":"+m+":"+s;
+    }
+ 
+</script>
+ 
+</body>
+ 
+</html>

@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+        <script src="https://gosspublic.alicdn.com/aliyun-oss-sdk-4.4.4.min.js"></script>
+        <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+        <!-- <script type="text/javascript" src="js/zepto.min.js"></script> -->
+        <script type="text/javascript" src="js/weui.min.js"></script>
+        <script type="text/javascript" src="js/common.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>bersaty</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link rel="stylesheet" href="css/weui.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+</head>
+<body>
+<div class="container">
+    <img class="top-img" src="" alt="加载中.." />
+    <div class="no-tip" hidden>暂无课程</div>
+    <div class="weui-tab__bd">
+        <div id="tab1" class="weui-tab__bd-item">
+            <div class="weui-panel weui-panel_access">
+                <div class="weui-panel__bd" id="tab_1"></div>
+            </div>
+        </div>
+        <div id="tab2" class="weui-tab__bd-item">
+            <div class="weui-panel weui-panel_access">
+                <div class="weui-panel__bd" id="tab_2"></div>
+            </div>
+        </div>
+        <div id="tab3" class="weui-tab__bd-item">
+            <div class="weui-panel weui-panel_access">
+                <div class="weui-panel__bd" id="tab_3"></div>
+            </div>
+        </div>
+    </div>
+    <!--底部导航栏-->
+    <div class="weui-tabbar">
+        <a href="#tab1" class="weui-tabbar__item" onclick="tabChange(0)">
+            <div class="weui-tabbar__icon">
+                <img class="tab-img" src="images/tap1_2.png" alt="加载中...">
+            </div>
+            <p class="weui-tabbar__label">视频</p>
+        </a>
+        <a href="#tab2" class="weui-tabbar__item" onclick="tabChange(1)">
+            <div class="weui-tabbar__icon">
+                <img class="tab-img" src="images/tap2.png" alt="加载中...">
+            </div>
+            <p class="weui-tabbar__label">音频</p>
+        </a>
+        <!-- <a href="#tab3" class="weui-tabbar__item" onclick="tabChange(2)">
+            <div class="weui-tabbar__icon">
+                <img class="tab-img" src="images/tap3.png" alt="加载中...">
+            </div>
+            <p class="weui-tabbar__label">文字</p>
+        </a> -->
+    </div>
+    <!--底部导航栏-->
+</div>
+</body>
+</html>

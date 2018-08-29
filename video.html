@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+        <script src="https://gosspublic.alicdn.com/aliyun-oss-sdk-4.4.4.min.js"></script>
+        <!-- <script type="text/javascript" src="javascript/zy.media.min.js"></script> -->
+        <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+        <!-- <script type="text/javascript" src="js/zepto.min.js"></script> -->
+        <script type="text/javascript" src="js/weui.min.js"></script>
+        <script type="text/javascript" src="js/common.js"></script>
+        <script type="text/javascript" src="js/main_video.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>bersaty</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link rel="stylesheet" href="css/weui.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/zy.media.min.css">
+
+</head>
+<body>
+
+        <div id="output"></div>
+        <img class="top-img" src="" alt="加载中.." />
+        <!-- <div id="gab" style="display:none;position:absolute;"> p</div> -->
+        <div class="videobox">
+            <video id="video" src=""
+            poster="images/default.png"
+            controls="controls"
+            preload="auto"
+            width="100%"
+            height="auto"
+            hidden 
+            x5-video-position="top"
+            x5-video-orientation="portraint"
+            x5-playsinline="true"
+            webkit-playsinline="true"
+            playsinline="true"
+            x-webkit-airplay="true">
+                你的浏览器不支持视频播放
+            </video>
+            <div class="video-info">正在播放。。。。</div>
+        </div>
+        <!-- <div class="audio-box" hidden>
+            <audio id="audio" src=""  controls="controls" loop="loop" preload="auto" preload x5-video-player-type="h5" x5-video-player-fullscreen="true" webkit-playsinline="true" playsinline="true">
+                你的浏览器不支持音频播放
+            </audio>
+        </div> -->
+<div class="container">
+
+    
+</div>
+    <div class="no-tip" hidden>暂无课程</div>
+    <div class="weui-tab_video_bd">
+        <div id="tab1" class="weui-tab__bd-item">
+            <div class="weui-panel weui-panel_access">
+                <div class="weui-panel__bd" id="tab_1"></div>
+            </div>
+        </div>
+        <!-- <div id="tab2" class="weui-tab__bd-item">
+            <div class="weui-panel weui-panel_access">
+                <div class="weui-panel__bd" id="tab_2"></div>
+            </div>
+        </div>
+        <div id="tab3" class="weui-tab__bd-item">
+            <div class="weui-panel weui-panel_access">
+                <div class="weui-panel__bd" id="tab_3"></div>
+            </div>
+        </div> -->
+    </div>
+</div>
+</body>
+</html>
