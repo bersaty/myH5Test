@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bdyj.dao.DbUserMapper">
+  <insert id="insert" parameterType="DbUser">
+    insert into db_user (id, username, passwd
+            )
+    values (#{id}, #{username}, #{passwd}
+                   )
+  </insert>
+
+  <update id="update" parameterType="DbUser">
+    UPDATE db_user as u SET u.username = #{username}, u.passwd = #{passwd}
+    where u.id = #{id}
+  </update>
+
+  <delete id="delete" parameterType="DbUser">
+    delete from db_user where id = #{id}
+  </delete>
+
+  <select id="selectAll" resultType="DbUser">
+    select id, username, passwd
+    from db_user
+  </select>
+
+  <select id="getUserByUsername" resultType="DbUser">
+    select id, username, passwd
+    from db_user
+    where username = #{username}
+  </select>
+</mapper>

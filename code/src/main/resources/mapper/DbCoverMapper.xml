@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bdyj.dao.DbCoverMapper">
+  <insert id="insert" parameterType="DbCover">
+    insert into db_cover (id, type, img
+      )
+    values (#{id,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{img,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="update" parameterType="DbCover">
+    update db_cover set img = #{img}
+    where id = #{id}
+  </update>
+  <select id="selectAll" resultType="DbCover">
+    select id, type, img
+    from db_cover
+  </select>
+  <select id="getCoverById" resultType="DbCover">
+    select id, type, img
+    from db_cover
+    where id = #{id}
+  </select>
+</mapper>

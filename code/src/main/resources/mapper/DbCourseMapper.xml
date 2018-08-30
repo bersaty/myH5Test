@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bdyj.dao.DbCourseMapper">
+  <insert id="insert" parameterType="DbCourse">
+    insert into db_course (id, name, type, 
+      cover)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{cover,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="update" parameterType="DbCourse">
+    UPDATE db_course as c SET c.name = #{name}, c.type = #{type}, c.cover = #{cover}
+    where c.id = #{id}
+  </update>
+
+  <delete id="delete" parameterType="DbCourse">
+    delete from db_course where id = #{id}
+  </delete>
+
+  <select id="selectAll" resultType="DbCourse">
+    SELECT c.id, c.name, c.type, c.cover,
+      (SELECT COUNT(l.id) FROM db_lesson AS l WHERE l.cid = c.id) AS COUNT
+    FROM
+    db_course AS c
+  </select>
+  <select id="getCourseById" resultType="DbCourse">
+    select c.id, c.name, c.type, c.cover
+    from db_course as c
+    where c.id = #{id}
+  </select>
+
+  <select id="getCourseByType" resultType="DbCourse">
+    select c.id, c.name, c.type, c.cover,
+      (SELECT COUNT(l.id) FROM db_lesson AS l WHERE l.cid = c.id) AS COUNT
+    from db_course as c
+    where  c.type = #{type}
+  </select>
+</mapper>

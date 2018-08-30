@@ -1,0 +1,6 @@
+.gradle/
+.idea/
+build/
+out/
+src/main/resources/aliKey.properties
+src/main/resources/jdbc.properties

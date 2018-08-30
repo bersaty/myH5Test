@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bdyj.dao.DbLessonMapper">
+    <insert id="insert" parameterType="DbLesson">
+    insert into db_lesson (id, cid, name, 
+      duration, content)
+    values (#{id,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{duration,jdbcType=REAL}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+
+    <update id="update" parameterType="DbLesson">
+        UPDATE db_lesson as l
+        <set>
+            <if test="cid != null">
+                l.cid = #{cid},
+            </if>
+            <if test="name != null">
+                l.name = #{name},
+            </if>
+            <if test="duration != null">
+                l.duration = #{duration},
+            </if>
+            <if test="content != null">
+                l.content = #{content}
+            </if>
+        </set>
+        where l.id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="DbLesson">
+    delete from db_lesson where id = #{id}
+  </delete>
+
+    <select id="selectAll" resultType="DbLesson">
+    select id, cid, name, duration, content
+    from db_lesson
+  </select>
+
+    <select id="getLessonById" resultType="DbLesson">
+    select id, cid, name, duration, content
+    from db_lesson
+    where id = #{id}
+  </select>
+
+    <select id="getLessonByCid" resultType="DbLesson">
+    select id, cid, name, duration, content
+    from db_lesson
+    where cid = #{cid}
+  </select>
+</mapper>

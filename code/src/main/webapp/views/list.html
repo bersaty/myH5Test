@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>芬陀利讲堂</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link rel="stylesheet" href="../css/lib/weui.min.css">
+    <link rel="stylesheet" href="../css/viewcss/list.css">
+</head>
+<body>
+<div class="container">
+    <img class="top-img" src="" alt="加载中.." />
+    <div class="videobox">
+        <video id="video" src=""
+        controls="controls"
+        preload="auto"
+        width="100%"
+        height="auto"
+        hidden 
+        x5-video-orientation="portraint"
+        x5-playsinline="true"
+        webkit-playsinline="true"
+        playsinline="true"
+        x-webkit-airplay="true">
+            你的浏览器不支持视频播放
+        </video>
+    </div>
+    <div class="audio-box" hidden>
+        <audio id="audio" src=""  controls="controls" loop="loop" preload="auto" preload x5-video-player-type="h5" x5-video-player-fullscreen="true" webkit-playsinline="true" playsinline="true">
+            你的浏览器不支持音频播放
+        </audio>
+    </div>
+    <div class="list-bd"></div>
+</div>
+<script type="text/javascript" src="../js/lib/zepto.min.js"></script><!--轻量级js库-->
+<script type="text/javascript" src="../js/lib/weui.min.js"></script>
+<script type="text/javascript" src="../js/lib/common.js"></script>
+<script type="text/javascript" src="../js/viewjs/list.js"></script>
+</body>
+</html>

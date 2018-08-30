@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>佛学讲解-后台管理</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="charset" content="utf-8">
+    <link rel="stylesheet" type="text/css" href="./css/mdui.min.css">
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+    <style type="text/css">
+    body {
+        background: url('./img/bgi.gif') no-repeat;
+        background-size: 100%;
+    }
+    </style>
+</head>
+
+<body>
+
+    <body class="mdui-drawer-body-left mdui-appbar-with-toolbar  mdui-theme-primary-indigo mdui-theme-accent-pink">
+        <div class="mdui-container mdui-row ">
+            <div class="mdui-col-xs-4 mdui-col-offset-xs-4 mdui-shadow-12 mdui-color-white mdui-m-t-5">
+                <h1 class="mdui-title mdui-text-color-theme mdui-m-a-4">登录</h1>
+                <div class="mdui-textfield mdui-textfield-floating-label mdui-m-a-4">
+                    <label class="mdui-textfield-label">用户名</label>
+                    <input class="mdui-textfield-input" type="text" id="username" />
+                </div>
+                <div class="mdui-textfield mdui-textfield-floating-label mdui-m-a-4">
+                    <label class="mdui-textfield-label">用户密码</label>
+                    <input class="mdui-textfield-input" type="password" id="password" />
+                </div>
+                <button class="mdui-btn mdui-color-theme mdui-center mdui-shadow-6 mdui-hoverable mdui-m-a-5 mdui-ripple" id="login">登录</button>
+            </div>
+        </div>
+        <footer>
+            <script src="./js/mdui.min.js"></script>
+            <script type="text/javascript">
+            var $ = mdui.JQ;
+            $("#login").on("click", function(e) {
+                var user = {
+                    username: $("#username").val(),
+                    passwd: $("#password").val(),
+                }
+                $.ajax({
+                    method: "POST",
+                    url: "/v1/user/login",
+                    data: user,
+                    dataType: "json",
+                    success: function(data) {
+                        if (parseInt(data.code) == 200) {
+                            sessionStorage.uid = data.data
+                            self.location = "./index.html"
+                        }
+                        mdui.snackbar(data.msg)
+                    },
+                })
+            })
+            </script>
+        </footer>
+    </body>
+
+</html>

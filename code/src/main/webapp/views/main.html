@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>芬陀利讲堂</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link rel="stylesheet" href="../css/lib/weui.min.css">
+    <link rel="stylesheet" href="../css/viewcss/main.css">
+</head>
+<body>
+<div class="container">
+    <img class="top-img" src="" alt="加载中.." />
+    <div class="no-tip" hidden>暂无课程</div>
+    <div class="weui-tab__bd">
+        <div id="tab1" class="weui-tab__bd-item">
+            <div class="weui-panel weui-panel_access">
+                <div class="weui-panel__bd" id="tab_1"></div>
+            </div>
+        </div>
+        <div id="tab2" class="weui-tab__bd-item">
+            <div class="weui-panel weui-panel_access">
+                <div class="weui-panel__bd" id="tab_2"></div>
+            </div>
+        </div>
+    </div>
+    <!--底部导航栏-->
+    <div class="weui-tabbar">
+        <a href="#tab1" class="weui-tabbar__item" onclick="tabChange(0)">
+            <div class="weui-tabbar__icon">
+                <img class="tab-img" src="../images/tap1_2.png" alt="加载中...">
+            </div>
+            <p class="weui-tabbar__label">视频</p>
+        </a>
+        <a href="#tab2" class="weui-tabbar__item" onclick="tabChange(1)">
+            <div class="weui-tabbar__icon">
+                <img class="tab-img" src="../images/tap2.png" alt="加载中...">
+            </div>
+            <p class="weui-tabbar__label">音频</p>
+        </a>
+    </div>
+    <!--底部导航栏-->
+</div>
+<script type="text/javascript" src="../js/lib/zepto.min.js"></script><!--轻量级js库-->
+<script type="text/javascript" src="../js/lib/weui.min.js"></script>
+<script type="text/javascript" src="../js/lib/common.js"></script>
+<script type="text/javascript" src="../js/viewjs/main.js"></script>
+</body>
+</html>
