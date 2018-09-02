@@ -60,4 +60,15 @@ public class DbLesson {
     public void setDuration_format(String duration_format) {
         this.duration_format = duration_format;
     }
+
+    public String toString() {
+        return "DbLesson{" +
+                "id=" + id +
+                ", cid=" + cid +
+                ", name='" + name + '\'' +
+                ", duration=" + duration +
+                ", duration_format='" + duration_format + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

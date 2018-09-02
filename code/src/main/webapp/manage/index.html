@@ -4,87 +4,154 @@
 <head>
     <title>佛学讲解-后台管理</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
     <meta http-equiv="charset" content="utf-8">
     <link rel="stylesheet" type="text/css" href="./css/mdui.min.css">
 </head>
 
-<body>
-
-    <body class="mdui-drawer-body-left mdui-appbar-with-toolbar  mdui-theme-primary-indigo mdui-theme-accent-pink">
-        <header class="mdui-appbar mdui-appbar-fixed">
+        <body class=" mdui-appbar-with-toolbar  mdui-theme-primary-indigo" style="padding-top:0;">
+        <!--<header class="mdui-appbar mdui-appbar-fixed">-->
             <div class="mdui-toolbar mdui-color-theme">
-                <span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-drawer="{target: '#main-drawer', swipe: true}"><i class="mdui-icon material-icons">menu</i></span>
+                <!--<span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-drawer="{target: '#main-drawer', swipe: true}"><i class="mdui-icon material-icons">menu</i></span>-->
                 <a class="mdui-typo-headline mdui-hidden-xs">佛学讲解</a>
                 <a class="mdui-typo-title">后台管理</a>
                 <div class="mdui-toolbar-spacer"></div>
                 <button class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-tooltip="{content: '退出登录', delay: 500, position:'left'}" id="logout"><i class="mdui-icon material-icons">directions_run</i></button>
             </div>
-        </header>
-        <div class="mdui-drawer" id="main-drawer">
-            <div class="mdui-list" style="margin-bottom: 76px;">
-                <div class="mdui-list-item mdui-ripple" mdui-drawer-close>
-                    <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-blue">library_books</i>
-                    <div class="mdui-list-item-content">课程管理</div>
+            <div class="mdui-tab mdui-color-indigo" id="top_tab" mdui-tab>
+                <a href="#tab1" id="top_tab1" class="mdui-ripple mdui-ripple-white type-btn" type="1">视频</a>
+                <a href="#tab2" id="top_tab2" class="mdui-ripple mdui-ripple-white type-btn" type="2">音频</a>
+                <a href="#tab3" id="top_tab3" class="mdui-ripple mdui-ripple-white type-btn" type="3">管理员列表</a>
+
+            </div>
+        <!--</header>-->
+        <!-- 侧边栏 -->
+        <!--<div class="mdui-drawer" id="main-drawer" style="border-right: 6px solid #3f51b5;">-->
+            <!--<div class="mdui-list" style="margin-bottom: 76px;">-->
+                <!--<div class="mdui-list-item mdui-ripple" >-->
+                    <!--<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-blue">library_books</i>-->
+                    <!--<div class="mdui-list-item-content" mdui-dialog="{target: '#course-dialog'}">新增课程</div>-->
+                <!--</div>-->
+                <!--&lt;!&ndash;<div class="mdui-list-item mdui-ripple" mdui-drawer-close>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-yellow">bookmark</i>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<div class="mdui-list-item-content">封面管理</div>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--<div class="mdui-list-item mdui-ripple" >-->
+                    <!--<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-red">tag_faces</i>-->
+                    <!--<div class="mdui-list-item-content" mdui-dialog="{target: '#user-dialog'}">新增管理员</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="mdui-container-fluid">
+            <div id="tab1">
+                <div class="mdui-container">
+                    <!-- 封面管理 -->
+                    <div class="cover-manage" style="margin-bottom: 10px;">
+                        <h1 class="mdui-text-color-theme">视频导航图:</h1>
+                        <div class="mdui-row mdui-m-t-4 mdui-center">
+                            <div class="mdui-card mdui-col-xs-3 cover-0 mdui-col-offset-xs-1 mdui-center">
+                                <div class="mdui-card-media">
+                                    <img src="" class="cover-0-img" style="max-width: 375px;max-height: 98px;vertical-align:middle;"/>
+                                    <!--<div class="mdui-card-header-title">视频导航图预览</div>-->
+                                </div>
+                                <div class="mdui-card-actions">
+                                    <button class="mdui-btn mdui-ripple cover-edit mdui-center mdui-color-theme" cover-type="0">修改</button>
+                                </div>
+                            </div>
+                            <!--<div class="mdui-card mdui-col-xs-3 cover-2 mdui-col-offset-xs-1">-->
+                            <!--<div class="mdui-card-media">-->
+                            <!--<img src="" class="cover-2-img" />-->
+                            <!--<div class="mdui-card-header-title">文字分类封面</div>-->
+                            <!--</div>-->
+                            <!--<div class="mdui-card-actions">-->
+                            <!--<button class="mdui-btn mdui-ripple cover-edit mdui-center mdui-color-theme"  cover-type="2">修改</button>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                        </div>
+                    </div>
+                    <div class="mdui-divider"></div>
+                    <!-- 课程管理 -->
+                    <div class="course-manage">
+                        <h1 class="mdui-text-color-theme">课程管理:</h1>
+                        <button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme mdui-m-a-2 mdui-text-color-white course-add" mdui-dialog="{target: '#course-dialog',closeOnConfirm:false}" course-type="0">添加课程</button>
+                        <br>
+
+                        <!--<div class="mdui-tab" mdui-tab>-->
+                            <!--<a href="#" class="mdui-ripple type-btn" type="0">视频课程</a>-->
+                            <!--<a href="#" class="mdui-ripple type-btn" type="1">音频课程</a>-->
+                        <!--</div>-->
+                        <!--<span>-->
+                        <!--<button class="mdui-btn mdui-color-theme mdui-text-color-white mdui-m-a-2 type-btn" type="0">视频课程</button>-->
+                        <!--<button class="mdui-btn mdui-color-theme mdui-text-color-white mdui-m-a-2 type-btn" type="1">音频课程</button>-->
+                        <!--&lt;!&ndash; <button class="mdui-btn mdui-color-theme mdui-text-color-white mdui-m-a-2 type-btn" type="2">文字课程</button> &ndash;&gt;-->
+                        <!--</span>-->
+                        <div class="mdui-list" id="course-list-video" mdui-collapse="{accordion: true}">
+                        </div>
+                    </div>
+                    <div class="mdui-divider"></div>
                 </div>
-                <div class="mdui-list-item mdui-ripple" mdui-drawer-close>
-                    <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-yellow">bookmark</i>
-                    <div class="mdui-list-item-content">封面管理</div>
+            </div>
+            <div id="tab2">
+                <div class="mdui-container">
+                    <!-- 封面管理 -->
+                    <div class="cover-manage" style="margin-bottom: 10px;">
+                        <h1 class="mdui-text-color-theme">音频导航图:</h1>
+                        <div class="mdui-row mdui-m-t-4 mdui-center">
+                            <div class="mdui-card mdui-col-xs-3 cover-1 mdui-col-offset-xs-1 mdui-center">
+                                <div class="mdui-card-media">
+                                    <img src="" class="cover-1-img" style="max-width: 375px;max-height: 98px;vertical-align:middle;"/>
+                                    <!--<div class="mdui-card-header-title">音频导航图预览</div>-->
+                                </div>
+                                <div class="mdui-card-actions">
+                                    <button class="mdui-btn mdui-ripple cover-edit mdui-center mdui-color-theme"  cover-type="1">修改</button>
+                                </div>
+                            </div>
+                            <!--<div class="mdui-card mdui-col-xs-3 cover-2 mdui-col-offset-xs-1">-->
+                            <!--<div class="mdui-card-media">-->
+                            <!--<img src="" class="cover-2-img" />-->
+                            <!--<div class="mdui-card-header-title">文字分类封面</div>-->
+                            <!--</div>-->
+                            <!--<div class="mdui-card-actions">-->
+                            <!--<button class="mdui-btn mdui-ripple cover-edit mdui-center mdui-color-theme"  cover-type="2">修改</button>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                        </div>
+                    </div>
+                    <div class="mdui-divider"></div>
+                    <!-- 课程管理 -->
+                    <div class="course-manage" >
+                        <h1 class="mdui-text-color-theme">课程管理:</h1>
+                        <button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme mdui-m-a-2 mdui-text-color-white course-add" mdui-dialog="{target: '#course-dialog',closeOnConfirm:false}" course-type="1">添加课程</button>
+                        <br>
+
+                        <!--<div class="mdui-tab" mdui-tab>-->
+                            <!--<a href="#" class="mdui-ripple type-btn" type="0">视频课程</a>-->
+                            <!--<a href="#" class="mdui-ripple type-btn" type="1">音频课程</a>-->
+                        <!--</div>-->
+                        <!--<span>-->
+                        <!--<button class="mdui-btn mdui-color-theme mdui-text-color-white mdui-m-a-2 type-btn" type="0">视频课程</button>-->
+                        <!--<button class="mdui-btn mdui-color-theme mdui-text-color-white mdui-m-a-2 type-btn" type="1">音频课程</button>-->
+                        <!--&lt;!&ndash; <button class="mdui-btn mdui-color-theme mdui-text-color-white mdui-m-a-2 type-btn" type="2">文字课程</button> &ndash;&gt;-->
+                        <!--</span>-->
+                        <div class="mdui-list" id="course-list-audio" mdui-collapse="{accordion: true}">
+                        </div>
+                    </div>
+                    <div class="mdui-divider"></div>
+
                 </div>
-                <div class="mdui-list-item mdui-ripple" mdui-drawer-close>
-                    <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-red">tag_faces</i>
-                    <div class="mdui-list-item-content" mdui-dialog="{target: '#user-dialog'}">新增管理员</div>
+            </div>
+            <div id="tab3">
+                <div class="mdui-container">
+                    <div class="mdui-card-actions">
+                        <button class="mdui-btn mdui-ripple mdui-center mdui-color-theme" mdui-dialog="{target: '#user-dialog'}">增加管理员</button>
+                    </div>
+                    <div class="mdui-divider"></div>
+
                 </div>
             </div>
         </div>
         <a id="anchor-top"></a>
-        <div class="mdui-container">
-            <!-- 课程管理 -->
-            <div class="course-manage">
-                <h1 class="mdui-text-color-theme">课程管理</h1>
-                <button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme mdui-m-a-2 mdui-text-color-white course-add" mdui-dialog="{target: '#course-dialog'}">添加课程</button>
-                <br>
-                <span>
-                  <button class="mdui-btn mdui-color-theme mdui-text-color-white mdui-m-a-2 type-btn" type="0">视频课程</button>
-                  <button class="mdui-btn mdui-color-theme mdui-text-color-white mdui-m-a-2 type-btn" type="1">音频课程</button>
-                  <!-- <button class="mdui-btn mdui-color-theme mdui-text-color-white mdui-m-a-2 type-btn" type="2">文字课程</button> -->
-                </span>
-                <div class="mdui-list" id="course-list" mdui-collapse="{accordion: true}">
-                </div>
-            </div>
-            <!-- 封面管理 -->
-            <div class="cover-manage">
-                <h1 class="mdui-text-color-theme">封面管理</h1>
-                <div class="mdui-row mdui-m-t-4">
-                    <div class="mdui-card mdui-col-xs-3 cover-0 mdui-col-offset-xs-1">
-                        <div class="mdui-card-media">
-                            <img src="" class="cover-0-img" />
-                            <div class="mdui-card-header-title">视频分类封面</div>
-                        </div>
-                        <div class="mdui-card-actions">
-                            <button class="mdui-btn mdui-ripple cover-edit mdui-center mdui-color-theme" cover-type="0">修改</button>
-                        </div>
-                    </div>
-                    <div class="mdui-card mdui-col-xs-3 cover-1 mdui-col-offset-xs-1">
-                        <div class="mdui-card-media">
-                            <img src="" class="cover-1-img"/>
-                            <div class="mdui-card-header-title">音频分类封面</div>
-                        </div>
-                        <div class="mdui-card-actions">
-                            <button class="mdui-btn mdui-ripple cover-edit mdui-center mdui-color-theme"  cover-type="1">修改</button>
-                        </div>
-                    </div>
-                    <div class="mdui-card mdui-col-xs-3 cover-2 mdui-col-offset-xs-1">
-                        <div class="mdui-card-media">
-                            <img src="" class="cover-2-img" />
-                            <div class="mdui-card-header-title">文字分类封面</div>
-                        </div>
-                        <div class="mdui-card-actions">
-                            <button class="mdui-btn mdui-ripple cover-edit mdui-center mdui-color-theme"  cover-type="2">修改</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <footer>
             <!-- 添加、修改课程dialog -->
             <div class="mdui-dialog" id="course-dialog">
@@ -92,29 +159,41 @@
                 <div class="mdui-dialog-content" style="height: 400px!important;">
                     <form id="course-form">
                         <div class="mdui-textfield">
-                            <label class="mdui-textfield-label">课程名称</label>
-                            <input class="mdui-textfield-input" type="text" id="course-name" name="name" />
+                            <div class="" style="color: #3d5afe">课程名称：</div>
+                            <input  class="mdui-textfield-input" type="text" id="course-name" name="name" placeholder="课程名称" />
                         </div>
                         <br>
-                        <label class="mdui-label">课程类别
+                        <br>
+                        <label class="mdui-label" style="color: #3d5afe;">课程类型：
                             <STRONG class="edit-info mdui-hidden">如果不修改此项则不需要再进行编辑</STRONG>
                         </label>
-                        <br>
-                        <br>
                         <select class="mdui-select" id="course-type" mdui-select>
                             <option value="0">视频</option>
                             <option value="1">音频</option>
-                            <option value="2">文字</option>
+                            <!--<option value="2">文字</option>-->
                         </select>
                         <br>
                         <br>
-                        <label class="mdui-label">上传课程封面</label>
                         <br>
-                        <br>
-                        <input type="file" class="image-zone" />
+                        <div style="float: left">
+                            <label class="mdui-label"  style="color: #3d5afe;">上传课程封面：</label>
+                            <br>
+                            <br>
+                            <div style=>
+                                <img id="cover-preview" src="/img/default.jpg" style="width: 200px;height: auto">
+                            </div>
+                            <input type="file" class="image-zone" id="course-upload-file"/>
+                        </div>
+                        <div style="float: left;display:none" class="loading-panel" >
+                            <div class="mdui-spinner" style="float: left"></div>
+                            <div style="float: left">&nbsp;&nbsp;&nbsp;正在上传，请稍等。。。</div>
+                        </div>
+                        <div style="clear:both"></div>
+
+
                     </form>
                     <div class="mdui-dialog-actions">
-                        <button class="mdui-btn mdui-ripple mdui-color-red" mdui-dialog-close>取消</button>
+                        <button class="mdui-btn mdui-ripple mdui-color-red" id="dialog-close" mdui-dialog-close>取消</button>
                         <button class="mdui-btn mdui-ripple mdui-color-theme mdui-text-color-white confirm" mdui-dialog-confirm>提交</button>
                     </div>
                 </div>
@@ -125,23 +204,31 @@
                 <div class="mdui-dialog-content" style="height: 400px!important;">
                     <form id="lesson-form">
                         <div class="mdui-textfield">
-                            <label class="mdui-textfield-label">课时名称</label>
+                            <label class="mdui-textfield-label" style="color: #3d5afe;">课时名称:</label>
                             <input class="mdui-textfield-input" type="text" id="lesson-name" name="name" />
                         </div>
                         <br>
                         <div class="mdui-textfield">
-                            <label class="mdui-textfield-label">课时所属课程</label>
+                            <label class="mdui-textfield-label">课时所属课程:</label>
                             <input class="mdui-textfield-input" disabled type="text" id="lesson-parent" />
                         </div>
                         <br>
                         <div id="lesson-upload">
                             <label class="mdui-label">上传文件</label>
                             <br>
-                            <input type="file" class="image-zone" />
+                            <input type="file" class="image-zone" id="lesson-upload-file"/>
                         </div>
+
+                        <div class="loading-panel" style="display: none;padding-top: 20px">
+                            <div class="mdui-spinner" style="float: left"></div>
+                            <div style="float: left" >&nbsp;&nbsp;&nbsp;正在上传，请稍等。。。</div>
+                        </div>
+                        <div style="clear:both"></div>
+
+
                         <div class="mdui-textfield" id="lesson-input">
-                            <label class="mdui-textfield-label">文章内容</label>
-                            <textarea class="mdui-textfield-input" id="lesson-content" rows="5" placeholder="在此处编辑文章"></textarea>
+                            <!--<label class="mdui-textfield-label">文章内容</label>-->
+                            <!--<textarea class="mdui-textfield-input" id="lesson-content" rows="5" placeholder="在此处编辑文章"></textarea>-->
                         </div>
                     </form>
                 </div>
@@ -156,6 +243,7 @@
                     <div>请上传长宽比为375：98的图片，避免实际展示时效果不佳</div>
                     <div class="mdui-dialog-title">上传封面</div>
                     <input type="file" class = "image-zone" />
+
                     <div class="mdui-dialog-actions">
                         <button class="mdui-btn mdui-ripple mdui-color-red" mdui-dialog-close>取消</button>
                         <button class="mdui-btn mdui-ripple mdui-color-theme mdui-text-color-white confirm" mdui-dialog-confirm>提交</button>
@@ -182,6 +270,33 @@
                     </div>
                 </div>
             </div>
+            <!-- 删除课程目录警告弹框 -->
+            <div class="mdui-dialog " id="delete-courses-dialog">
+                <div class="mdui-dialog-title">确定删除?</div>
+                <div class="mdui-dialog-content">将会删除该课程下所有文件，请谨慎操作！！</div>
+                <div class="mdui-dialog-actions">
+                    <button class="mdui-btn mdui-ripple mdui-color-red" mdui-dialog-close>取消</button>
+                    <button class="mdui-btn mdui-ripple mdui-color-theme mdui-text-color-white confirm" mdui-dialog-confirm>确定</button>
+                </div>
+            </div>
+            <!-- 删除课时警告弹框 -->
+            <div class="mdui-dialog" id="delete-lesson-dialog">
+                <div class="mdui-dialog-title">确定删除?</div>
+                <div class="mdui-dialog-content">将会对应的课时，请谨慎操作！！</div>
+                <div class="mdui-dialog-actions">
+                    <button class="mdui-btn mdui-ripple mdui-color-red" mdui-dialog-close>取消</button>
+                    <button class="mdui-btn mdui-ripple mdui-color-theme mdui-text-color-white confirm" mdui-dialog-confirm>确定</button>
+                </div>
+            </div>
+
+            <!-- loading 弹框 -->
+            <div class="mdui-dialog" id="upload-loading-dialog" >
+                <div class="mdui-dialog-content">
+                    <div class="mdui-spinner" style="float: left"></div>
+                    <div style="float: left" >&nbsp;&nbsp;&nbsp;正在加载，请稍等。。。</div>
+                </div>
+            </div>
+
             <video style="display:none;" controls="controls" id="video" oncanplaythrough="saveDuration(this)"></video>
             <script src="./js/mdui.min.js"></script>
             <script src="./js/main.js"></script>

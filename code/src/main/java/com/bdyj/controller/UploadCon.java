@@ -32,6 +32,8 @@ public class UploadCon {
         //获取文件原始名称
         String originalFilename = upload.getOriginalFilename();
         String newFileName = UUID.randomUUID() + originalFilename.substring(originalFilename.lastIndexOf("."));
+        System.out.println(" upload file originalFilename = "+originalFilename+" newFileName = "+newFileName);
+
         OSSClient ossClient = OssClientHelper.getOssClient();
         InputStream in = upload.getInputStream();
         ossClient.putObject("fentuoli-3", newFileName, in);
