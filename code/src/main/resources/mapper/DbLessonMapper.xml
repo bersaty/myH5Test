@@ -45,6 +45,6 @@
     <select id="getLessonByCid" resultType="DbLesson">
     select id, cid, name, duration, content
     from db_lesson
-    where cid = #{cid}
+    where cid = #{cid} order by name ASC
   </select>
 </mapper>

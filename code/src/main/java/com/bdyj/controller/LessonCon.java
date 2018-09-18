@@ -43,6 +43,16 @@ public class LessonCon {
     @LoginRequired
     public @ResponseBody
     Result update(DbLesson lesson) {
+        System.out.println(" lessonCon update lesson filename = "+lesson.getName()+" content = "+lesson.getContent());
+        System.out.println(" lessonCon updateLesson old lesson "+lessonServ.getLesson(lesson.getId()).getContent());
+
+        //删除旧文件
+        DbLesson oldLesson = lessonServ.getLesson(lesson.getId());
+        String objectName = oldLesson.getContent().substring(oldLesson.getContent().lastIndexOf('/')+1,oldLesson.getContent().length());
+        if(!lesson.getContent().equals(oldLesson.getContent())) {
+            OssClientHelper.deleteFile(objectName);
+        }
+
         lessonServ.updateLesson(lesson);
         return Result.success("成功", lesson);
     }
@@ -57,19 +67,7 @@ public class LessonCon {
         //获取文件原始名称
         DbLesson lessonServLesson = lessonServ.getLesson(lesson.getId());
         String objectName = lessonServLesson.getContent().substring(lessonServLesson.getContent().lastIndexOf('/')+1,lessonServLesson.getContent().length());
-        OSSClient ossClient = null;
-        try {
-            ossClient = OssClientHelper.getOssClient();
-            System.out.println(" delete file originalFilename = "+lessonServLesson.getName()+" objectName = "+objectName);
-            // 删除文件。
-            ossClient.deleteObject("fentuoli-3", objectName);
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            if(ossClient != null){
-                ossClient.shutdown();
-            }
-        }
+        OssClientHelper.deleteFile(objectName);
 
         lessonServ.delLesson(lesson);
         return Result.success("成功", lesson);

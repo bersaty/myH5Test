@@ -13,15 +13,13 @@ public class CoverServImpl implements CoverServ {
     @Autowired
     private DbCoverMapper coverMapper;
 
-    @Override
-    public String getCover(int type){
-        DbCover cover = new DbCover();
-        cover.setId(type);
-        return coverMapper.getCoverById(cover).getImg();
-    }
-
     public List<DbCover> getAllCover(){
         return coverMapper.selectAll();
+    }
+
+    @Override
+    public DbCover getCoverById(int id) {
+        return coverMapper.getCoverById(id);
     }
 
     @Override

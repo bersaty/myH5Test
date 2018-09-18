@@ -20,13 +20,13 @@ function courseList(tabNum) {
             }else{
                 $(".no-tip").hide();
                 for (var i = 0; i < courseList.length; i++) {
-                    var newItem = '<a href="javascript:goList(' + courseList[i].id + ');" class="weui-media-box weui-media-box_appmsg">\n' +
+                    var newItem = '<a style="border: solid 2px #ebebeb;" href="javascript:goList(' + courseList[i].id + ');" class="weui-media-box weui-media-box_appmsg">\n' +
                         '<div class="weui-media-box__hd">\n' +
                         '<img class="weui-media-box__thumb" src="' + courseList[i].cover + '" alt="加载中...">\n' +
                         '</div>\n' +
                         '<div class="weui-media-box__bd">\n' +
-                        '<h4 class="weui-media-box__title">'+courseList[i].name+'</h4>\n' +
-                        '<p class="weui-media-box__desc">共' + courseList[i].count + '讲</p>\n' +
+                        '<h4 class="weui-media-box__title ">'+courseList[i].name+'</h4>\n' +
+                        '<p class="weui-media-box__desc ">共' + courseList[i].count + '讲</p>\n' +
                         '</div>\n' +
                         '</a>'
                     newCentent += newItem;

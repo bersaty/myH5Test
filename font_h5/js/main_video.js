@@ -1,19 +1,27 @@
 var tabNum;
 $(function () {
     tabNum = sessionStorage.getItem('tabNum') || 0;
+
+    if(tabNum ==0){
+        $("#tab2").hide()
+    }else if(tabNum == 1){
+        $("#tab1").hide()
+    }
     courseObjectList(tabNum,getUrlParam("index"));
     // tabChange(tabNum)
     // coverByType(tabNum)
     coverImage(tabNum);
 
+    //播放结束监听
     $("#video").bind('ended', function () {
         $("#video").hide();
         $(".top-img").show();
-        exitFullscreen();
+        // exitFullscreen();
         // $("#video").attr("src",null);
         // window.location.reload();
     })
 
+    //播放监听
     $("#video").bind('timeupdate',function(){
         // console.log("current time = "+this.currentTime+" totalTime = "+this.duration);
 
@@ -27,7 +35,6 @@ $(function () {
         console.log("play ～～～");
         var videoHeight = $(".videobox").outerHeight();
         var bannerHeight = $(".top-img").outerHeight();
-
         console.log("play ～～～videoHeight = "+videoHeight);
         $(".weui-panel__bd").css("marginTop",20 + (bannerHeight>videoHeight?bannerHeight:videoHeight));
 
@@ -37,20 +44,37 @@ $(function () {
 
 });
 
+var playAudio = function (url ) {
+    // $(".top-img").hide();
+    // $(".audio-box").show();
+    // $(".video-info").hide();
+    // $("#video").hide();
+    // $("#audio").attr("src",url)
+}
+
 /**
  * 播放视频
- * @param {视频地址} url 
- * @param {封面地址} img_url 
+ * @param {string} url
+ * @param {string} img_url
+ * @param {int} playNow
  */
-var playVideo = function(url,img_url){
+var playVideo = function(url, img_url, playNow){
     img_url == undefined ? default_img:img_url;
-    $("#video").show();
-    $(".video-info").show();
-    // $("#audio").hide();
-    // $(".top-img").hide();
-    $("#video").attr("src",url)
-    // $("#video").attr("poster",img_url)
-    $("#video").load()
+    sessionStorage.autoplay = 0
+    if(typeof playNow != "undefined" && playNow == 1){
+        sessionStorage.autoplay = 1
+    }
+
+        $("#video").show();
+        $(".video-info").show();
+        // $("#audio").hide();
+        // $(".top-img").hide();
+        $("#video").attr("src",url)
+        // $("#video").attr("poster",img_url)
+        $("#video").load()
+        $("#video").attr("oncanplay","setCurrentPlayTime(this)")
+
+    // location.reload()
 };
 
 var captureImage = function() {
@@ -68,8 +92,8 @@ var captureImage = function() {
 
 function goList(prefix) {
     // prefix = prefix.replace(/[//]/g,'');
-    var tabNum = sessionStorage.getItem('tabNum')
-    window.location.href = "video.html?tabNum=" + tabNum+"&index="+prefix;
+    tabNum = sessionStorage.getItem('tabNum')
+    window.location.href = "media.html?tabNum=" + tabNum+"&index="+prefix;
 }
 
 /**
@@ -100,29 +124,17 @@ function itemCilck(symbol) {
         console.log("url = "+url);
         // 开始播放视频
         if(tabNum==0){
-            playVideo(url)
+            playVideo(url,null,1)
             $(".video-info").html(symbol.substring(symbol.lastIndexOf("/")+1,symbol.length));
         }else if(tabNum==1){
-            $(".top-img").hide();
-            $(".audio-box").show();
-            $(".video-info").hide();
-            $("#video").hide();
-            $("#audio").attr("src",url)
+            playAudio(url)
         }
     }else{
         // $(".top-img").show();
         // $(".audio-box").hide();
         // $("#video").hide();
     }
-    // if(symbol.e)
 
-    // var videoHeight = $(".videobox").outerHeight();
-    // var bannerHeight = $(".top-img").outerHeight();
-
-    // $(".weui-panel__bd").attr("margin-top",bannerHeight>videoHeight?bannerHeight:videoHeight);
-
-    // console.log("video height = "+$(".videobox").outerHeight());
-    // console.log("banner height = "+$(".top-img").outerHeight());
 }
 
 /** ======================================风格线=================================== **/
@@ -145,21 +157,15 @@ function courseObjectList(tabNum,prefix) {
             var newCentent = "";
 
             if(dataList !== null && dataList.length > 1){
-                // var videoHeight = $(".videobox").outerHeight();
-                // var bannerHeight = $(".top-img").outerHeight();
-                // console.log("courseObjectList ～～～videoHeight = "+videoHeight);
+                if(tabNum == 0) {
+                    $(".video-info").html(dataList[1].name.substring(dataList[1].name.lastIndexOf("/") + 1, dataList[1].name.length));
+                    playVideo(client.getObjectUrl(dataList[1].name, Common.DOMAIN))
+                }else if(tabNum == 1){
+                    var bannerHeight = $(".top-img").outerHeight();
+                    $(".weui-panel__bd").css("marginTop",50);
 
-                //  $("#gab").height(bannerHeight>videoHeight?bannerHeight:videoHeight);
-                //  $("#gab").attr("position","relative");
-                // $(".weui-panel__bd").css("marginTop",20 + (bannerHeight>videoHeight?bannerHeight:videoHeight));
-                //  $(".weui-tab_video_bd").css("marginTop",bannerHeight>videoHeight?bannerHeight:videoHeight);
-    
-                $(".video-info").html(dataList[1].name.substring(dataList[1].name.lastIndexOf("/")+1,dataList[1].name.length));
-                playVideo(client.getObjectUrl(dataList[1].name,Common.DOMAIN))
-                // $(".top-img").hide();
-                // $(".audio-box").hide();
-                // $("#video").show();
-                // $("#video").attr("src",client.getObjectUrl(dataList[1].name,Common.DOMAIN))
+                    playAudio(client.getObjectUrl(dataList[1].name, Common.DOMAIN))
+                }
             }
 
             if(courseList==null && dataList ==null){
@@ -173,26 +179,25 @@ function courseObjectList(tabNum,prefix) {
                     newCentent += createListItem(dataList,false,prefix);
                 }
             }
+
             if(tabNum==0){
                 $('#tab_1').html(newCentent)
             }else if(tabNum==1){
                 $('#tab_2').html(newCentent)
             }else if(tabNum==2){
-                $('#tab_3').html(newCentent)
+                // $('#tab_3').html(newCentent)
             }
             weuiHideLoading();
 
-            // console.log("video height = "+$(".videobox").outerHeight());
-            // console.log("banner height = "+$(".top-img").outerHeight());
-            var videoHeight = $(".videobox").outerHeight();
-            var bannerHeight = $(".top-img").outerHeight();
-            console.log("courseObjectList ～～～videoHeight = "+videoHeight);
-            $(".weui-panel__bd").css("marginTop",20 + (bannerHeight>videoHeight?bannerHeight:videoHeight));
+            // var videoHeight = $(".videobox").outerHeight();
+            // var bannerHeight = $(".top-img").outerHeight();
+            // console.log("courseObjectList ～～～videoHeight = "+videoHeight);
+            // $(".weui-panel__bd").css("marginTop",20 + (bannerHeight>videoHeight?bannerHeight:videoHeight));
 
       })
-    //   .catch(function (err) {
-    //     weuiAlert(err);
-    //   });
+      .catch(function (err) {
+          weuiHideLoading();
+      });
     // setTimeout(function () {
     //     weuiHideLoading()
     // },500)
@@ -256,4 +261,18 @@ function exitFullscreen() {
     } else if (de.webkitExitFullscreen) {
         de.webkitExitFullscreen();
     }
+}
+
+function setCurrentPlayTime(e) {
+    console.log("can play ,autoplay = "+sessionStorage.autoplay)
+    e.currentTime = 2
+    if(sessionStorage.autoplay == 1) {
+        e.play()
+    }
+    $("#video").removeAttr("oncanplay")
+
+    var videoHeight = $(".videobox").outerHeight();
+    var bannerHeight = $(".top-img").outerHeight();
+    console.log("courseObjectList ～～～videoHeight = "+videoHeight);
+    $(".weui-panel__bd").css("marginTop",20 + (bannerHeight>videoHeight?bannerHeight:videoHeight));
 }

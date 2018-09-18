@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 public interface CoverServ {
-    String getCover(int type);
+    DbCover getCoverById(int id);
     void updateCover(DbCover cover);
     List<DbCover> getAllCover();
 }

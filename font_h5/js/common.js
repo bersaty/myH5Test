@@ -40,13 +40,6 @@ function weuiLoading() {
 }
 
 /**
- * 点击列表触发的事件
- * @param {Object} symbol 点击列表跳转的内容
- */
-function itemClick(symbol){
-
-}
-/**
  * weui隐藏加载弹框
  */
 function weuiHideLoading() {
@@ -62,14 +55,6 @@ var Common = {
     bucket:'daanfashi'
 }
 
-// var Common = {
-//     URL:"http://47.92.101.209/v1/",
-//     DOMAIN:"http://wch-test.oss-cn-hangzhou.aliyuncs.com/",
-//     region:'oss-cn-hangzhou',
-//     accessKeyId:'LTAI7pUFVOiOJbcx',
-//     accessKeySecret:'VyQZ0YszQhqqgkQKkBZQw1bEdkeD1A',
-//     bucket:'wch-test'
-// }
 
 var client = new OSS.Wrapper({
     region: Common.region,

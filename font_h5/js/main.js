@@ -10,7 +10,7 @@ $(function () {
 function goList(prefix) {
     // prefix = prefix.replace(/[//]/g,'');
     var tabNum = sessionStorage.getItem('tabNum')
-    window.location.href = "video.html?tabNum=" + tabNum+"&index="+prefix;
+    window.location.href = "media.html?tabNum=" + tabNum+"&index="+prefix;
 }
 
 /** ======================================风格线=================================== **/
@@ -50,10 +50,9 @@ function courseFolderList(tabNum) {
                 $('#tab_3').html(newCentent)
             }
             weuiHideLoading();
-      })
-    //   .catch(function (err) {
-    //     weuiAlert(err);
-    //   });
+      }).catch(function (err) {
+        weuiHideLoading();
+    });
     // setTimeout(function () {
     //     weuiHideLoading();
     // },500)

@@ -16,5 +16,5 @@ public interface DbCourseMapper {
 
     List<DbCourse> getCourseByType(int type);
 
-    DbCourse getCourseById(DbCourse dbCourse);
+    DbCourse getCourseById(int id);
 }

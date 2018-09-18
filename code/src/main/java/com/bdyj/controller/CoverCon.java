@@ -3,8 +3,10 @@ package com.bdyj.controller;
 import com.bdyj.interceptor.annotation.LoginRequired;
 import com.bdyj.model.DbCourse;
 import com.bdyj.model.DbCover;
+import com.bdyj.model.DbLesson;
 import com.bdyj.service.CourseServ;
 import com.bdyj.service.CoverServ;
+import com.bdyj.util.OssClientHelper;
 import com.bdyj.util.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,6 +30,15 @@ public class CoverCon {
     @LoginRequired
     public @ResponseBody
     Result updateCover(DbCover cover) {
+
+        //删除旧文件
+        DbCover oldCover = coverServ.getCoverById(cover.getId());
+        System.out.println(" update cover old = "+oldCover.getImg());
+        String objectName = oldCover.getImg().substring(oldCover.getImg().lastIndexOf('/')+1,oldCover.getImg().length());
+        if(!oldCover.getImg().equals(cover.getImg())) {
+            OssClientHelper.deleteFile(objectName);
+        }
+
         coverServ.updateCover(cover);
         return Result.success("修改成功", cover);
     }

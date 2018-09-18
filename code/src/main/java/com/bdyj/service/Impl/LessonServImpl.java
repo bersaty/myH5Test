@@ -29,6 +29,8 @@ public class LessonServImpl implements LessonServ {
 
     @Override
     public void updateLesson(DbLesson lesson){
+        System.out.println(" lessonServImpl updateLesson name = "+lesson.getName()+" content = "+lesson.getContent());
+        System.out.println(" lessonServImpl updateLesson old lesson "+lessonMapper.getLessonById(lesson.getId()).getContent());
         lessonMapper.update(lesson);
     }
 
@@ -36,9 +38,9 @@ public class LessonServImpl implements LessonServ {
     public List<DbLesson> getLessonList(int cid){
 
         List<DbLesson> dbLessons = lessonMapper.getLessonByCid(cid);
-        DbCourse course = new DbCourse();
-        course.setId(cid);
-        course = courseMapper.getCourseById(course);
+//        DbCourse course = new DbCourse();
+//        course.setId(cid);
+        DbCourse course = courseMapper.getCourseById(cid);
         int type = course.getType();
         if (type == 2) return dbLessons;
         for (DbLesson lesson : dbLessons){

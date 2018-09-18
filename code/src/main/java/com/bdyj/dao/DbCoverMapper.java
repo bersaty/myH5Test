@@ -12,5 +12,5 @@ public interface DbCoverMapper {
 
     List<DbCover> selectAll();
 
-    DbCover getCoverById(DbCover cover);
+    DbCover getCoverById(int id);
 }

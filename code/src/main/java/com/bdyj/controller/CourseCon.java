@@ -2,9 +2,11 @@ package com.bdyj.controller;
 
 import com.bdyj.interceptor.annotation.LoginRequired;
 import com.bdyj.model.DbCourse;
+import com.bdyj.model.DbLesson;
 import com.bdyj.service.CourseServ;
 import com.bdyj.service.CoverServ;
 import com.bdyj.service.LessonServ;
+import com.bdyj.util.OssClientHelper;
 import com.bdyj.util.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -73,6 +75,16 @@ public class CourseCon {
     @LoginRequired
     public @ResponseBody
     Result updateCourse(DbCourse course) {
+
+        //删除旧文件
+        DbCourse oldCourse = courseServ.getCourseById(course.getId());
+        System.out.println(" update course old = "+oldCourse.getCover());
+
+        String objectName = oldCourse.getCover().substring(oldCourse.getCover().lastIndexOf('/')+1,oldCourse.getCover().length());
+        if(!oldCourse.getCover().equals(course.getCover())) {
+            OssClientHelper.deleteFile(objectName);
+        }
+
         if (courseServ.updateCourse(course)) {
             return Result.success("更新成功", course);
         }

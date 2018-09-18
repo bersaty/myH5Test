@@ -20,15 +20,23 @@ public class CourseServImpl implements CourseServ {
 
     @Override
     public Boolean insertCourse(DbCourse course){
-        if (courseMapper.getCourseById(course) != null)
-            return false;
+        System.out.println(" insertCourseimpl course = "+course);
+        if(course != null){
+            System.out.println(" insertCourseimpl name = "+course.getName()+" id = "+course.getId()+" cover = "+course.getCover());
+        }
+//        if (courseMapper.getCourseById(course.getId()) != null)
+//            return false;
         courseMapper.insert(course);
         return true;
     }
 
     @Override
     public Boolean updateCourse(DbCourse course){
-        if (courseMapper.getCourseById(course) == null)
+        System.out.println(" updateCourseimpl course = "+course);
+        if(course != null){
+            System.out.println(" updateCourseimpl name = "+course.getName()+" id = "+course.getId()+" cover = "+course.getCover());
+        }
+        if (courseMapper.getCourseById(course.getId()) == null)
             return false;
         courseMapper.update(course);
         return true;
@@ -36,11 +44,20 @@ public class CourseServImpl implements CourseServ {
 
     @Override
     public void delCourse(DbCourse course){
+        System.out.println(" deleteCourseimpl course = "+course);
+        if(course != null){
+            System.out.println(" deleteCourseimpl name = "+course.getName()+" id = "+course.getId()+" cover = "+course.getCover());
+        }
         courseMapper.delete(course);
     }
 
     @Override
     public List<DbCourse> getAllCourse(){
         return courseMapper.selectAll();
+    }
+
+    @Override
+    public DbCourse getCourseById(int id) {
+        return courseMapper.getCourseById(id);
     }
 }

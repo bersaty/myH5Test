@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class OssClientHelper {
+
     public static OSSClient getOssClient() throws IOException {
         //得到配置文件
         InputStream in = OssClientHelper.class.getResourceAsStream("/aliKey.properties");
@@ -40,6 +41,22 @@ public class OssClientHelper {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public static void deleteFile(String fileName){
+        OSSClient ossClient = null;
+        try {
+            ossClient = OssClientHelper.getOssClient();
+            // 删除文件。
+            ossClient.deleteObject("fentuoli-3", fileName);
+            System.out.println(" delete file  fileName = "+fileName);
+        }catch (Exception e){
+            System.out.println(" error : delete file  "+fileName);
+            e.printStackTrace();
+        }finally {
+            if(ossClient != null){
+                ossClient.shutdown();
+            }
+        }
     }
 }

@@ -10,4 +10,5 @@ public interface CourseServ {
     Boolean updateCourse(DbCourse course);
     void delCourse(DbCourse course);
     List<DbCourse> getAllCourse();
+    DbCourse getCourseById(int id);
 }

@@ -14,5 +14,5 @@ public interface DbUserMapper {
 
     List<DbUser> selectAll();
 
-    DbUser getUserByUsername(DbUser user);
+    DbUser getUserByUsername(String username);
 }

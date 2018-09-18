@@ -6,4 +6,5 @@ import org.springframework.stereotype.Service;
 public interface UserServ {
     DbUser login(DbUser user);
     DbUser signin(DbUser user);
+    DbUser getUserByUsername(String username);
 }

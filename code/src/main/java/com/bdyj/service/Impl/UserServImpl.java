@@ -14,7 +14,7 @@ public class UserServImpl implements UserServ {
 
     @Override
     public DbUser login(DbUser user){
-        DbUser target = userMapper.getUserByUsername(user);
+        DbUser target = userMapper.getUserByUsername(user.getUsername());
         if (target == null)
             return null;
         if (!Md5.verifiMd5(user.getPasswd(), target.getPasswd())){
@@ -24,7 +24,7 @@ public class UserServImpl implements UserServ {
 
     @Override
     public DbUser signin(DbUser user){
-        DbUser target = userMapper.getUserByUsername(user);
+        DbUser target = userMapper.getUserByUsername(user.getUsername());
         try{
             target.getId();
         }catch (Exception e){
@@ -33,6 +33,11 @@ public class UserServImpl implements UserServ {
             return user;
         }
         return null;
+    }
+
+    @Override
+    public DbUser getUserByUsername(String username) {
+        return userMapper.getUserByUsername(username);
     }
 
 }
