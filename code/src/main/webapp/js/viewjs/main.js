@@ -20,8 +20,8 @@ function courseList(tabNum) {
             }else{
                 $(".no-tip").hide();
                 for (var i = 0; i < courseList.length; i++) {
-                    var newItem = '<a style="border: solid 2px #ebebeb;" href="javascript:goList(' + courseList[i].id + ');" class="weui-media-box weui-media-box_appmsg">\n' +
-                        '<div class="weui-media-box__hd">\n' +
+                    var newItem = '<a style="border: solid 2px #ebebeb;padding:4px" href="javascript:goList(' + courseList[i].id + ');" class="weui-media-box weui-media-box_appmsg">\n' +
+                        '<div class="weui-media-box__hd" style="margin-right:1px">\n' +
                         '<img class="weui-media-box__thumb" src="' + courseList[i].cover + '" alt="加载中...">\n' +
                         '</div>\n' +
                         '<div class="weui-media-box__bd">\n' +

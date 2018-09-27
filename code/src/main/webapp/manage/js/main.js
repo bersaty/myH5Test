@@ -39,14 +39,14 @@ function main() {
         course.typeCN = typeList[parseInt(course.type)]
         var html = "<div style=\"margin-bottom: 20px\" class=\"mdui-collapse-item course-item mdui-shadow-2\" id=\"course-item-"+course.id+"\" "+
             "course-type=\"" + course.type + "\" course-count=\"" + course.count + "\" course-cover=\"" + course.cover + "\" " +
-            "course-name=\"" + course.name + "\" course-id=\"" + course.id + "\">\n" +
+            "course-name=\"" + course.name +"\" course-orderid=\"" + course.orderid + "\" course-id=\"" + course.id + "\">\n" +
             "<div class=\"mdui-collapse-item-header\">\n" +
             "<div class=\"mdui-list-item mdui-ripple\" mdui-tooltip=\"{content: '点击展开章节', delay: 500}\"> \n" +
-            "<div class=\"mdui-list-item-avatar\"><img class=\"mdui-img-fluid course-cover\" style=\"height: 40px width: 40px\" src=\"" + course.cover + "\" /></div>\n" +
+            "<div class=\"mdui-list-item-avatar\" style=\" max-width: 100px;border-radius: 0%\"><img class=\"mdui-img-fluid course-cover\"  src=\"" + course.cover + "\" /></div>\n" +
             "<div class=\"mdui-list-item-content\">\n" +
             "<div class=\"mdui-list-item-title course-name\">" + course.name + "</div>\n" +
             "<div class=\"mdui-list-item-text mdui-list-item-one-line course-info\">课程类型: " + course.typeCN + "&nbsp;&nbsp;&nbsp;&nbsp;课时长度: " + course.count +
-            // " 课时type: " + course.type +
+            "&nbsp;&nbsp;&nbsp;课程排序: " + course.orderid +
             "</div>\n" +
             "</div>\n" +
             "<button class=\"mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme mdui-m-r-1 mdui-text-color-white lesson-add\" mdui-dialog=\"{target: '#lesson-dialog',closeOnConfirm:false,modal:true}\">添加课时</button>\n" +
@@ -67,7 +67,7 @@ function main() {
             "\" lesson-name=\"" + lesson.name + "\" lesson-content=\"" + lesson.content +
             "\" lesson-duration=\"" + lesson.duration + "\" lesson-type=\"" + lesson.type + "\">\n" +
             "<div class=\"mdui-list-item-content\">" + lesson.name + "</div>\n" +
-            // "<div class=\"mdui-list-item-content\">lesson id = " + lesson.id + "</div>\n" +
+            "<div class=\"mdui-list-item-content\"> 时长 = " + parseInt(lesson.duration/60) +":"+(lesson.duration%60)+ "</div>\n" +
             "<button class=\"mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme mdui-m-r-1 mdui-text-color-white lesson-edit\" mdui-dialog=\"{target: '#lesson-dialog',closeOnConfirm:false}\">编辑</button>\n" +
             "<button class=\"mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-red  lesson-del\" mdui-dialog=\"{target: '#delete-lesson-dialog'}\">删除</button>\n" +
             "</div>"
@@ -95,7 +95,8 @@ function main() {
                 inst.show('top_tab2')
             }
             bindEvent()
-            bindSrcEvent(".image-zone")
+            bindSrcEvent(".image-zone",-1)
+            bindSrcEvent("#lesson-upload-file-1",1)
         }
     })
 
@@ -193,12 +194,13 @@ function main() {
             var course = $(this).parents(".course-item")
 
             console.log("course-edit : id = " + course.attr("course-id") + " name = " + course.attr("course-name") +
-                " type = "+course.attr("course-type"))
+                " type = "+course.attr("course-type")+" orderid = "+course.attr("course-orderid"))
             course = {
                 id: course.attr("course-id"),
                 name: course.attr("course-name"),
                 type: course.attr("course-type"),
                 cover: course.attr("course-cover"),
+                orderid: course.attr("course-orderid"),
             }
             sessionStorage.course = JSON.stringify(course)
             sessionStorage.url = course.cover
@@ -224,15 +226,19 @@ function main() {
             //新增
             var course = sessionStorage.course
             $("#course-type").val(course_type)
+            $("#course-order").val(1)
             if (typeof(course) == "undefined") return
             console.log("open course name =  " + $("#course-name").val() + " course type = " + (currentTab) + " course id= " + $("#course-id").val())
 
             //编辑
             var course = JSON.parse(course)
             $("#course-name").val(course.name)
-            // $("#course-type").val(course_type)
+            $("#course-order").val(course.orderid)
             // sessionStorage.url = course.cover
             // $(".edit-info").show()
+            console.log("open course content = "+course.cover)
+            $("#cover-preview").attr("src",course.cover)
+            // document.getElementById("cover-preview").src = JSON.parse(course).content;
         })
         //课程弹框提交按钮
         $("#course-dialog").on("confirm.mdui.dialog", function () {
@@ -252,6 +258,7 @@ function main() {
 
             var course = {
                 name: $("#course-name").val(),
+                orderid: $("#course-order").val(),
                 type: currentTab,
                 cover: sessionStorage.url,
             }
@@ -390,6 +397,7 @@ function main() {
         //添加课时
         $(".lesson-add").on("click", function(argument) {
             var course = $(this).parents(".course-item")
+            $(".confirm").removeAttr("disabled")
             course = {
                 id: course.attr("course-id"),
                 name: course.attr("course-name"),
@@ -444,6 +452,8 @@ function main() {
                 $(".confirm").attr("disabled",null)
                 if(course.type == 0 || course.type == 1) {
                     document.getElementById("video").src = lesson.content
+                    document.getElementById("video2").src = lesson.content
+
                 }
                 console.log("open lesson dialog lesson name = "+lesson.name+" type = "+course.type);
             }
@@ -525,15 +535,12 @@ function main() {
 
                 if (lesson.name == "" || lesson.name == null) {
                     mdui.snackbar(i+" 项，名称不能为空 ")
+                    return
                 }
                 // i++;
 
             var callback = function (status) {
 
-                if (lesson.name == "" || lesson.name == null) {
-                    mdui.snackbar(i+" 项，名称不能为空 ")
-                    return
-                }
                 i++;
                 if(status == "fail"){
                     log("upload fail")
@@ -541,6 +548,9 @@ function main() {
                         log("正在上传 "+i+" 项")
                         lesson.name= $("#lesson-name-"+i).val()
                         uploadFile(callback,"#lesson-upload-file-"+i,"#upload-status-"+i)
+                    }else {
+                        setTimeout("location.reload()", 500)
+                        inst.close()
                     }
                     return
                 }
@@ -552,6 +562,19 @@ function main() {
                     lesson.duration = 0
                 }
 
+                if (lesson.name == "" || lesson.name == null) {
+                    mdui.snackbar((i-1)+" 项，名称不能为空 ")
+                    if(i<=lesson_count) {
+                        log("正在上传 "+i+" 项")
+                        lesson.name= $("#lesson-name-"+i).val()
+                        uploadFile(callback,"#lesson-upload-file-"+i,"#upload-status-"+i)
+                    }else {
+                        setTimeout("location.reload()", 500)
+                        inst.close()
+                    }
+                    return
+                }
+
                 $.ajax({
                     method: "POST",
                     data: lesson,
@@ -560,10 +583,6 @@ function main() {
                         data = JSON.parse(data)
                         loginCheck(data)
                         mdui.snackbar(data.msg)
-                        if(i >  lesson_count) {
-                            // setTimeout("location.reload()", 500)
-                            inst.close()
-                        }
                         log("lesson name "+lesson.name)
                         log("lesson content "+lesson.content)
                         log("lesson cid "+lesson.cid)
@@ -572,6 +591,9 @@ function main() {
                             log("正在上传 "+i+" 项")
                             lesson.name= $("#lesson-name-"+i).val()
                             uploadFile(callback,"#lesson-upload-file-"+i,"#upload-status-"+i)
+                        }else {
+                            setTimeout("location.reload()", 500)
+                            inst.close()
                         }
                         // setTimeout("location.reload()", 500)
                     },
@@ -581,6 +603,9 @@ function main() {
                             log("正在上传 "+i+" 项")
                             lesson.name= $("#lesson-name-"+i).val()
                             uploadFile(callback,"#lesson-upload-file-"+i,"#upload-status-"+i)
+                        }else {
+                            setTimeout("location.reload()", 500)
+                            inst.close()
                         }
                     }
                 })
@@ -632,7 +657,7 @@ function main() {
             log("添加条目 count = "+lesson_count)
             $("#lesson-table-body").append($(lesson_item))
 
-            bindSrcEvent("#lesson-upload-file-"+(lesson_count+1))
+            bindSrcEvent("#lesson-upload-file-"+(lesson_count+1),(lesson_count+1))
 
         })
     }
@@ -641,6 +666,7 @@ function main() {
     function lessonBind(){
         //编辑课时
         $(".lesson-edit").on('click', function (argument) {
+            sessionStorage.lesson_count = 1
             var _this = $(this)
             var lesson = {
                 id: _this.parent().attr("lesson-id"),
@@ -669,6 +695,7 @@ function main() {
         })
         //删除课时
         $(".lesson-del").on("click", function (argument) {
+            $(".confirm").removeAttr("disabled")
             var _this = $(this)
             var lesson = {
                 id: _this.parent().attr("lesson-id"),
@@ -715,7 +742,7 @@ function main() {
         sessionStorage.uploadType = 3
     })
     $("#img-dialog").on("confirm.mdui.dialog", function(argument) {
-        console.log("confimr  img dialog ~");
+        console.log("confimr img dialog ~");
 
         var cover = {
             id: sessionStorage.cover,
@@ -772,7 +799,7 @@ function main() {
             passwd: $("#user-password").val(),
         }
         if (user.username == "" || user.passwd == "") {
-            mdui.snackbar("用户名或密码不能未空")
+            mdui.snackbar("用户名或密码不能为空")
             return
         }
         $.ajax({
@@ -787,6 +814,70 @@ function main() {
 
     })
 
+    function resizeImg(file) {
+        var reader = new FileReader();//新建获取file的读取文件
+        var imgsrc = null;
+        reader.readAsDataURL(file);//输出base64图片
+        reader.onload = function(e) {//字面理解是加载图片，得到结果吧，不是很理解
+            imgsrc = this.result;//输出结果
+            // 压缩
+            var image=new Image();//新建图片
+            image.src=imgsrc;
+            image.onload=function(){
+                var cvs=document.createElement('canvas');//画布
+                var cvx =cvs.getContext('2d');//
+                // draw image params
+                var ratio = this.width/ 324;
+                cvs.width=this.width / ratio;
+                cvs.height=this.height / ratio;
+                // cvx.drawImage(this, 0, 0,this.width,this.height);//画图
+                cvx.drawImage(image, 0, 0, this.width, this.height, 0, 0, this.width / ratio, this.height / ratio);
+
+                var newImageData = cvs.toDataURL("image/jpeg",0.5);//这是压缩，具体的看.toDataURL api 输出base64
+                // console.log(newImageData);
+                // $('.upP_img1').html('<img id="newimg" src="' + newImageData + '">');
+                $("#cover-preview").attr("src",newImageData)
+
+                return dataURLtoFile(newImageData,"compress_file")
+                // return convertBase64UrlToBlob(newImageData)
+                // console.log(this.width+'--'+this.height);
+                // 上传图片后的以宽高充满判断    
+                // var imgscale2 = this.width / this.height;
+                // var photoscale2 = $("#cover-preview").width() /$("#cover-preview").height();
+                // if (imgscale2 > photoscale2) {
+                //     $('#newimg').css({ "width": "100%", "height": "auto" });
+                // } else {
+                //     $('#newimg').css({ "width": "auto", "height": "100%" });
+                // }
+            }
+        }
+
+    }
+
+    function getBlobBydataURI(dataURI,type) {
+        var binary = atob(dataURI.split(',')[1]);
+        var array = [];
+        for(var i = 0; i < binary.length; i++) {
+            array.push(binary.charCodeAt(i));
+        }
+        return new Blob([new Uint8Array(array)], {type:type });
+    }
+
+    function dataURLtoFile(dataurl, filename) {//将base64转换为文件
+        var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+        while(n--){
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+
+        var file = new File([u8arr], filename, {type:mime});
+
+        // sessionStorage.resize_file = file
+        log(" dataURLtoFile name  = "+file.name)
+
+        return file
+    }
+
     //上传文件
     function uploadFile(callback,upload_id,lesson_status_id){
         log("uploadfile upload_id = " + upload_id+" lesson_id = "+lesson_status_id);
@@ -797,6 +888,8 @@ function main() {
             if(typeof sessionStorage.url != "undefined"){
                 //修改
                 callback("success")
+            }else {
+                callback("fail")
             }
             return
         }
@@ -821,7 +914,7 @@ function main() {
         }
         // $(".confirm").removeAttr("disabled")
         if(typeof(file) != "undefined") {
-            log("file uploadFile save duration = " + file.path)
+            log("file path = " + file.path)
             log("file name  = " + file.name);
             log("file value  = " + file.value);
 
@@ -831,7 +924,12 @@ function main() {
                 var video = file;
                 var url = URL.createObjectURL(video);
                 document.getElementById("video").src = url
+                document.getElementById("video2").src = url
                 // $(".confirm").removeAttr("disabled")
+            }else if(uploadType == "2" && sessionStorage.resize_file != "undefined"){
+                // file = sessionStorage.resize_file
+                // log("session file = "+ file)
+                // sessionStorage.removeItem("resize_file")
             }
 
             var fd = new FormData()
@@ -871,7 +969,11 @@ function main() {
                         if(typeof callback == "function") {
                             callback("success");
                             $(".loading-panel").hide()
+                        }else {
+                            callback("fail")
                         }
+                    }else{
+                        callback("fail")
                     }
                 },
                 error: function(argument) {
@@ -892,13 +994,18 @@ function main() {
         }
     }
     //选择文件时判断格式，获取时长
-    function bindSrcEvent(src_id_class)
+    function bindSrcEvent(src_id_class,id)
     {
+
         $(src_id_class).on("change", function () {
             var file = $(this).get(0).files[0]
             log("file on change = " + file)
             if(typeof file == "undefined"){
                 return
+            }
+            if(parseInt(id) > 0) {
+                var lastIndex = file.name.lastIndexOf('.') > 20 ? 20 : file.name.lastIndexOf('.')
+                $("#lesson-name-" + id).val(file.name.substr(0,lastIndex))
             }
             //得到上传文件类型，0代表视频，1代表音频，2代表图片,3代表封面
             var uploadType = sessionStorage.uploadType
@@ -920,6 +1027,8 @@ function main() {
                 // document.getElementById("video").src = url
                 console.log(" confirm remove disable")
                 $(".confirm").removeAttr("disabled")
+            }else if(uploadType == "2"){
+                resizeImg(file)
             }
         })
     }

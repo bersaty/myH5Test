@@ -9,26 +9,31 @@
 </head>
 <body>
 <div class="container">
-    <img class="top-img" src="" alt="加载中.." />
-    <div class="videobox">
-        <video id="video" src=""
-        controls="controls"
-        preload="auto"
-        width="100%"
-        height="auto"
-        hidden 
-        x5-video-orientation="portraint"
-        x5-playsinline="true"
-        webkit-playsinline="true"
-        playsinline="true"
-        x-webkit-airplay="true">
-            你的浏览器不支持视频播放
-        </video>
-    </div>
-    <div class="audio-box" hidden>
-        <audio id="audio" src=""  controls="controls" loop="loop" preload="auto" preload x5-video-player-type="h5" x5-video-player-fullscreen="true" webkit-playsinline="true" playsinline="true">
-            你的浏览器不支持音频播放
-        </audio>
+    <div class="title-container">
+        <img class="top-img" src="" alt="加载中.." />
+        <p class="video-info" style="white-space:nowrap;">正在播放。。。。</p>
+        <div class="videobox">
+            <video id="video" src=""
+                   controls="controls"
+                   preload="auto"
+                   width="100%"
+                   height="auto"
+                   hidden
+                   x5-video-orientation="portraint"
+                   x5-playsinline="true"
+                   webkit-playsinline="true"
+                   playsinline="true"
+                   x-webkit-airplay="true"
+                   oncanplay="setCurrentPlayTime(this)"
+            >
+                你的浏览器不支持视频播放
+            </video>
+        </div>
+        <div class="audio-box" hidden>
+            <audio id="audio" src=""  controls="controls" loop="loop" preload="auto" preload x5-video-player-type="h5" x5-video-player-fullscreen="true" webkit-playsinline="true" playsinline="true">
+                你的浏览器不支持音频播放
+            </audio>
+        </div>
     </div>
     <div class="list-bd"></div>
 </div>

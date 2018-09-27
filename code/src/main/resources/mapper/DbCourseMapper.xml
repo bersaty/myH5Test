@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bdyj.dao.DbCourseMapper">
   <insert id="insert" parameterType="DbCourse">
-    insert into db_course (id, name, type, 
+    insert into db_course (id, name, type, orderid,
       cover)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{orderid,jdbcType=INTEGER},
       #{cover,jdbcType=VARCHAR})
   </insert>
 
   <update id="update" parameterType="DbCourse">
-    UPDATE db_course as c SET c.name = #{name}, c.type = #{type}, c.cover = #{cover}
+    UPDATE db_course as c SET c.name = #{name}, c.type = #{type}, c.cover = #{cover}, c.orderid = #{orderid}
     where c.id = #{id}
   </update>
 
@@ -18,21 +18,21 @@
   </delete>
 
   <select id="selectAll" resultType="DbCourse">
-    SELECT c.id, c.name, c.type, c.cover,
+    SELECT c.id, c.name, c.type, c.cover,c.orderid,
       (SELECT COUNT(l.id) FROM db_lesson AS l WHERE l.cid = c.id) AS COUNT
     FROM
-    db_course AS c
+    db_course AS c order by orderid ASC
   </select>
   <select id="getCourseById" resultType="DbCourse">
-    select c.id, c.name, c.type, c.cover
+    select c.id, c.name, c.type, c.cover,c.orderid
     from db_course as c
     where c.id = #{id}
   </select>
 
   <select id="getCourseByType" resultType="DbCourse">
-    select c.id, c.name, c.type, c.cover,
+    select c.id, c.name, c.type, c.cover,c.orderid,
       (SELECT COUNT(l.id) FROM db_lesson AS l WHERE l.cid = c.id) AS COUNT
     from db_course as c
-    where  c.type = #{type}
+    where  c.type = #{type} order by orderid ASC
   </select>
 </mapper>

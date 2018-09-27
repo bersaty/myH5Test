@@ -11,6 +11,8 @@ public class DbCourse {
 
     private int count;
 
+    private int orderid;
+
     public Integer getId() {
         return id;
     }
@@ -49,5 +51,13 @@ public class DbCourse {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public Integer getOrderid() {
+        return orderid;
+    }
+
+    public void setOrderid(Integer id) {
+        this.orderid = id;
     }
 }

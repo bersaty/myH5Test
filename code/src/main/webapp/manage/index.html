@@ -22,7 +22,7 @@
 <div class="mdui-tab mdui-color-indigo" id="top_tab" >
     <a href="#tab1" id="top_tab1" class="mdui-ripple mdui-ripple-white type-btn" type="1">视频</a>
     <a href="#tab2" id="top_tab2" class="mdui-ripple mdui-ripple-white type-btn" type="2">音频</a>
-    <a href="#tab3" id="top_tab3" class="mdui-ripple mdui-ripple-white type-btn" type="3">管理员列表</a>
+    <!--<a href="#tab3" id="top_tab3" class="mdui-ripple mdui-ripple-white type-btn" type="3">管理员列表</a>-->
 </div>
 <!-- 对应每个tab的内容 -->
 <div class="mdui-container-fluid">
@@ -87,21 +87,21 @@
 
         </div>
     </div>
-    <div id="tab3">
-        <div class="mdui-container">
-            <div class="mdui-card-actions">
-                <button class="mdui-btn mdui-ripple mdui-center mdui-color-theme" mdui-dialog="{target: '#user-dialog'}">增加管理员</button>
-            </div>
-            <div class="mdui-divider"></div>
+    <!--<div id="tab3">-->
+        <!--<div class="mdui-container">-->
+            <!--<div class="mdui-card-actions">-->
+                <!--<button class="mdui-btn mdui-ripple mdui-center mdui-color-theme" mdui-dialog="{target: '#user-dialog'}">增加管理员</button>-->
+            <!--</div>-->
+            <!--<div class="mdui-divider"></div>-->
 
-        </div>
-    </div>
+        <!--</div>-->
+    <!--</div>-->
 </div>
 <a id="anchor-top"></a>
 
 <footer>
     <!-- 添加、修改课程dialog -->
-    <div class="mdui-dialog" id="course-dialog">
+    <div class="mdui-dialog" style="min-height: 90%" id="course-dialog">
         <div class="mdui-dialog-title">课程信息</div>
         <div class="mdui-dialog-content" >
             <form id="course-form">
@@ -110,11 +110,11 @@
                     <input  class="mdui-textfield-input" type="text" id="course-name" name="name" placeholder="课程名称" />
                 </div>
                 <br>
-                <br>
                 <label class="mdui-label" style="color: #3d5afe;">课程类型：
                     <input id="course-type" disabled style="border: 0px;font-size: 15px">
                         <!--<option value="2">文字</option>-->
                     </input>
+                    排序： <input id="course-order" style="font-size: 15px">
                 </label>
                 <br>
                 <br>
@@ -140,14 +140,20 @@
         </div>
     </div>
     <!-- 添加、修改课时dialog -->
-    <div class="mdui-dialog"  id="lesson-dialog">
-        <div class="mdui-dialog-title">课时信息</div>
-        <div class="mdui-dialog-content"  >
+    <div class="mdui-dialog"  style="min-height: 90%" id="lesson-dialog">
+        <div class="mdui-dialog-title">课时信息
+            <div class="mdui-textfield mdui-textfield-disabled">
+                <label style="font-size: 20px;color: #808080;">所属课程:&nbsp;&nbsp;</label>
+                <input style="border: none;width: 400px;font-size:20px;color: #808080;" disabled type="text" id="lesson-parent">
+                <span class="mdui-fab mdui-fab-mini mdui-color-theme-accent
+                        mdui-ripple mdui-float-right mdui-m-r-1 mdui-m-b-1" id="add-lesson-btn" >
+                    <i class="mdui-icon material-icons" style="padding: 0px">add</i>
+                </span>
+            </div>
+        </div>
+        <div  class="mdui-dialog-content" >
             <form id="lesson-form">
-                <div class="mdui-textfield mdui-textfield-disabled">
-                    <label style="font-size: 20px;color: #808080;">所属课程:&nbsp;&nbsp;</label>
-                    <input style="border: none;width: 400px;font-size:20px;color: #808080;" disabled type="text" id="lesson-parent">
-                </div>
+
                 <div class="mdui-table-fluid">
                     <table class="mdui-table" border="1">
                         <thead>
@@ -170,26 +176,25 @@
                         </tbody>
                     </table>
                 </div>
-                <span class="mdui-fab mdui-fab-mini mdui-color-theme-accent
-                        mdui-ripple mdui-float-right mdui-m-t-2" id="add-lesson-btn" ><i class="mdui-icon material-icons">add</i></span>
-                <div style="clear:both"></div>
-                <div class="loading-panel" style="display: none;padding-top: 20px">
-                    <div class="mdui-spinner" style="float: left"></div>
-                    <div style="float: left" >&nbsp;&nbsp;&nbsp;正在上传，请稍等。。。</div>
-                </div>
-                <div style="clear:both"></div>
 
             </form>
         </div>
         <div class="mdui-dialog-actions">
+            <!--<div style="clear:both"></div>-->
+            <div class="loading-panel" style="display: none">
+                <div class="mdui-spinner" style="float: left"></div>
+                <div style="float: left;padding-top: 8px" >&nbsp;&nbsp;&nbsp;正在上传，请稍等。。。</div>
+            </div>
+            <!--<div style="clear:both"></div>-->
             <button class="mdui-btn mdui-ripple mdui-color-red" mdui-dialog-close>取消</button>
             <button class="mdui-btn mdui-ripple mdui-color-theme mdui-text-color-white confirm" mdui-dialog-confirm>提交</button>
+            <div style="clear:both"></div>
         </div>
     </div>
     <!-- 上传图片dialog -->
     <div class="mdui-dialog" id="img-dialog">
         <div class="mdui-dialog-content">
-            <div>请上传长宽比为375：98的图片，避免实际展示时效果不佳</div>
+            <div>请上传长宽比为108：30的图片，避免实际展示时效果不佳</div>
             <div class="mdui-dialog-title">上传封面</div>
             <input type="file" class = "image-zone" id="cover-img"/>
         </div>
@@ -244,7 +249,9 @@
         </div>
     </div>
 
-    <video style="display:none;" controls="controls" id="video" oncanplaythrough="saveDuration(this)"></video>
+    <video style="display:none;" controls="controls" id="video" oncanplay="saveDuration(this)"></video>
+    <video style="display:none;" controls="controls" id="video2" oncanplaythrough="saveDuration(this)"></video>
+
     <script src="./js/mdui.min.js"></script>
     <script src="./js/main.js"></script>
 </footer>

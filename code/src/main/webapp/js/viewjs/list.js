@@ -7,6 +7,7 @@ $(function () {
     coverByType(tabNum)
     $("#video").bind('ended', function () {
         $("#video").hide();
+        $(".video-info").hide();
         $(".top-img").show();
         exitFullscreen();
         window.location.reload();
@@ -27,8 +28,9 @@ function lessonList(CourseId) {
             var newCentent = "";
             var tabNum = sessionStorage.getItem("tabNum")
             for (var i = 0; i < lessionList.length; i++) {
-                console.log(lessionList[i])
-                var newItem = '<a href="javascript:goDetail(' + lessionList[i].id + ');" class="list-item-a">\n' +
+                // console.log(lessionList[i])
+                var newItem = '<a href="javascript:goDetail(' + lessionList[i].id + ');" ' +
+                    ' class="list-item-a" style="padding-left: 5px;padding-right: 5px">\n' +
                     '            <h4 class="item-title">' + lessionList[i].name + '</h4>\n' +
                     '            <p class="item-text">' + lessionList[i].duration_format + '</p>\n' +
                     '        </a>'
@@ -102,12 +104,16 @@ function stateCombination(lessonId) {
                 $(".audio-box").hide();
                 $("#video").show();
                 $("#video").attr("src",lesson.content)
+                $(".list-bd").css("marginTop","68%");
             }else if(tabNum==1){
                 $(".top-img").hide();
                 $(".audio-box").show();
                 $("#video").hide();
                 $("#audio").attr("src",lesson.content)
+                $(".list-bd").css("marginTop","26%");
             }
+            $(".video-info").html(lesson.name)
+            $(".video-info").show()
         },
         error: function (res) {
             weuiAlert(res.code, res.data)
@@ -129,4 +135,9 @@ function exitFullscreen() {
     } else if (de.webkitCancelFullScreen) {
         de.webkitCancelFullScreen();
     }
+}
+
+function setCurrentPlayTime(e) {
+    e.currentTime = 2
+    $("#video").removeAttr("oncanplay")
 }
