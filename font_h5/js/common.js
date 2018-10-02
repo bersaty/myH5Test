@@ -47,7 +47,6 @@ function weuiHideLoading() {
     loading.hide();
 }
 var Common = {
-    URL:"http://47.92.101.209/v1/",
     DOMAIN:"https://daanfs.donglin.org/",
     region:'oss-cn-hangzhou',
     accessKeyId:'LTAIiuhWCwxva6fj',

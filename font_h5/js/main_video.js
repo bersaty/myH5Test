@@ -95,12 +95,14 @@ function goList(prefix) {
     tabNum = sessionStorage.getItem('tabNum')
     window.location.href = "media.html?tabNum=" + tabNum+"&index="+prefix;
 }
-
 /**
  * 播放视频
  * @param tabNum
  */
-function itemCilck(symbol) {
+var normalColor = "#ffffff";
+var selectColor = "#bbaa77";
+var oldi=0;
+function itemCilck(i,symbol) {
 
     // $(".videobox").outerHeight();
 
@@ -128,13 +130,16 @@ function itemCilck(symbol) {
             $(".video-info").html(symbol.substring(symbol.lastIndexOf("/")+1,symbol.length));
         }else if(tabNum==1){
             playAudio(url)
+            $(".video-info").html(symbol.substring(symbol.lastIndexOf("/")+1,symbol.length));
         }
     }else{
         // $(".top-img").show();
         // $(".audio-box").hide();
         // $("#video").hide();
     }
-
+	$("#i"+oldi).css("background", normalColor);
+	$("#i"+i).css("background", selectColor);
+	oldi=i;
 }
 
 /** ======================================风格线=================================== **/
@@ -153,13 +158,20 @@ function courseObjectList(tabNum,prefix) {
         'delimiter':'/'
       }).then(function (result) {
             var courseList = result.prefixes;
-            var dataList = result.objects;
+            var dataList = new Array();//result.objects;
+			for(var x in result.objects){
+				if(result.objects[x].name.indexOf(".mp4")>0){
+					dataList.push(result.objects[x]);
+				}
+			}
+			
             var newCentent = "";
 
-            if(dataList !== null && dataList.length > 1){
+            if(dataList !== null && dataList.length > 0){
                 if(tabNum == 0) {
-                    $(".video-info").html(dataList[1].name.substring(dataList[1].name.lastIndexOf("/") + 1, dataList[1].name.length));
-                    playVideo(client.getObjectUrl(dataList[1].name, Common.DOMAIN))
+                    $(".video-info").html(dataList[0].name.substring(dataList[0].name.lastIndexOf("/") + 1, dataList[0].name.length-4));
+
+                    playVideo(client.getObjectUrl(dataList[0].name, Common.DOMAIN))
                 }else if(tabNum == 1){
                     var bannerHeight = $(".top-img").outerHeight();
                     $(".weui-panel__bd").css("marginTop",50);
@@ -187,12 +199,18 @@ function courseObjectList(tabNum,prefix) {
             }else if(tabNum==2){
                 // $('#tab_3').html(newCentent)
             }
-            weuiHideLoading();
 
-            // var videoHeight = $(".videobox").outerHeight();
-            // var bannerHeight = $(".top-img").outerHeight();
-            // console.log("courseObjectList ～～～videoHeight = "+videoHeight);
-            // $(".weui-panel__bd").css("marginTop",20 + (bannerHeight>videoHeight?bannerHeight:videoHeight));
+			if(dataList !== null && dataList.length > 0){
+				$("#i"+0).css("background", selectColor);
+				oldi=0;
+			}
+
+            var videoHeight = $(".videobox").outerHeight();
+            var bannerHeight = $(".top-img").outerHeight();
+            console.log("courseObjectList ～～～videoHeight = "+videoHeight);
+            $(".weui-panel__bd").css("marginTop",20 + (bannerHeight>videoHeight?bannerHeight:videoHeight));
+			weuiHideLoading();
+
 
       })
       .catch(function (err) {
@@ -201,7 +219,6 @@ function courseObjectList(tabNum,prefix) {
     // setTimeout(function () {
     //     weuiHideLoading()
     // },500)
-
 }
 
 /**
@@ -213,16 +230,17 @@ function createListItem(list,isFolder,prefix){
     var newCentent = '';
     for (var i = 0; i < list.length; i++) {
         var name;
+		var clr = normalColor;//i==0?selectColor:normalColor;
         if(isFolder){
             // name = list[i].replace(/[//]/g,'');
             name = list[i];
             if(name.replace(prefix,'') !== ''){
-                var newItem = '<a style="border-bottom: 6px solid #EEEEEE;;" href="javascript:itemCilck(&quot;' + name + '&quot;);" class="weui-media-box weui-media-box_appmsg">\n' +
+                var newItem = '<a id="i'+i+'" style="border-bottom: 6px solid #EEEEEE;background:'+clr+';" href="javascript:itemCilck('+i+',&quot;' + name + '&quot;);" class="weui-media-box weui-media-box_appmsg">\n' +
                     // '<div class="weui-media-box__hd">\n' +
                     // '<img class="weui-media-box__thumb" src="' + default_img + '" alt="正在加载...">\n' +
                     // '</div>\n' +
                     '<div class="weui-media-box__bd">\n' +
-                    '<p style="word-break:break-all">' + name.replace(prefix,'')+'</p>\n' +
+                    '<p style="word-break:break-all;text-align:left;">【' + name.replace(prefix,'').slice(2,-1)+'】</p>\n' +
                     // '<p class="weui-media-box__desc">共 ' + list[i].count + ' 讲</p>\n' +
                     '</div>\n' +
                     '</a>'
@@ -231,12 +249,12 @@ function createListItem(list,isFolder,prefix){
         }else{
             name = list[i].name;
             if(name.replace(prefix,'') !== ''){
-                var newItem = '<a style="border-bottom: 6px solid #EEEEEE;;" href="javascript:itemCilck(&quot;' + name + '&quot;);" class="weui-media-box weui-media-box_appmsg">\n' +
-                    '<div class="weui-media-box__hd">\n' +
-                    '<img class="weui-media-box__thumb" src="' + default_img + '" alt="正在加载...">\n' +
-                    '</div>\n' +
+                var newItem = '<a id="i'+i+'" style="border-bottom: 6px solid #EEEEEE;background:'+clr+';" href="javascript:itemCilck('+i+',&quot;' + name + '&quot;);" class="weui-media-box weui-media-box_appmsg">\n' +
+                    // '<div class="weui-media-box__hd">\n' +
+                    // '<img class="weui-media-box__thumb" src="' + default_img + '" alt="正在加载...">\n' +
+                    // '</div>\n' +
                     '<div class="weui-media-box__bd">\n' +
-                    '<p style="word-break:break-all">' + name.replace(prefix,'')+'</p>\n' +
+                    '<p style="word-break:break-all;text-align:left;">【' + name.replace(prefix,'').slice(0,-4)+'】</p>\n' +
                     // '<p class="weui-media-box__desc">共 ' + list[i].count + ' 讲</p>\n' +
                     '</div>\n' +
                     '</a>'

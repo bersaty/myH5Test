@@ -10,7 +10,7 @@ $(function () {
 function goList(prefix) {
     // prefix = prefix.replace(/[//]/g,'');
     var tabNum = sessionStorage.getItem('tabNum')
-    window.location.href = "media.html?tabNum=" + tabNum+"&index="+prefix;
+    window.location.href = encodeURI("media.html?tabNum=" + tabNum+"&index="+prefix);
 }
 
 /** ======================================风格线=================================== **/
@@ -30,6 +30,9 @@ function courseFolderList(tabNum) {
       }).then(function (result) {
             var courseList = result.prefixes;
             var dataList = result.objects;
+			//console.log("courseList = "+courseList)
+			//console.log("dataList = "+dataList)
+
             var newCentent = "";
             if(courseList==null && dataList ==null){
                 $(".no-tip").show();
@@ -82,7 +85,7 @@ function createListItem(list,isFolder,prefix){
                 // '<img class="weui-media-box__thumb" src="' + default_img + '" alt="正在加载...">\n' +
                 // '</div>\n' +
                 '<div class="weui-media-box__bd">\n' +
-                '<h4 class="weui-media-box__title">' + name.replace(prefix,'')+'</h4>\n' +
+                '<h4 class="weui-media-box__title">【' + name.replace(prefix,'').slice(2,-1)+'】</h4>\n' +
                 // '<p class="weui-media-box__desc">共 ' + list[i].count + ' 讲</p>\n' +
                 '</div>\n' +
                 '</a>'

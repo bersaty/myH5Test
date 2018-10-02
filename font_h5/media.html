@@ -14,42 +14,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <link rel="stylesheet" href="css/weui.min.css">
     <link rel="stylesheet" href="css/main.css">
+<style> 
+.abc{ border:1px solid #000; margin:0 auto;padding 0;text-align:center;} 
+@media screen and (min-width: 800px) { 
+.abc {width: 800px} 
+} 
+/* css 注释说明：设置了浏览器宽度不小于800px时 abc 显示800px宽度 */ 
+@media screen and (max-width: 200px) { 
+.abc {width: 200px;} 
+} 
+/* 设置了浏览器宽度不大于200px时 abc 显示200px宽度 */ 
 
+</style> 
+<!--[if lt IE 9]> 
+<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script> 
+<![endif]--> 
+<script language="javascript">
+var ss;
+window.onload=function()
+{
+	var w=document.documentElement.clientWidth ;//可见区域宽度
+	var h=document.documentElement.clientHeight;//可见区域高度
+	ss=document.getElementById('video');
+	//alert(w);
+	if(w>h*0.8){
+		ss.style.width=h*0.8+"px";
+	}
+}
+$(window).resize(function () {          //当浏览器大小变化时
+    //alert($(window).height());          //浏览器时下窗口可视区域高度
+    //alert($(document).height());        //浏览器时下窗口文档的高度
+    //alert($(document.body).height());   //浏览器时下窗口文档body的高度
+    //alert($(document.body).outerHeight(true)); //浏览器时下窗口文档body的总高度 包括border padding margin
+	var w=document.documentElement.clientWidth ;//可见区域宽度
+	var h=document.documentElement.clientHeight;//可见区域高度
+	ss=document.getElementById('video');
+	//alert(w);
+	if(w>h*0.8){
+		ss.style.width=h*0.8+"px";
+	}else{
+		ss.style.width="100%";
+	}
+	
+});
+</script>
 </head>
 <body>
-
-<div class="container">
-        <div id="output"></div>
-        <div class="weui-navbar">
-            <img class="top-img" src="" alt="加载中.." />
-            <!-- <div id="gab" style="display:none;position:absolute;"> p</div> -->
-            <div class="videobox">
-                <p class="video-info" style="white-space:nowrap;">正在播放。。。。</p>
-                <video id="video" src=""
-                       poster="images/default.png"
-                       controls="controls"
-                       preload="none"
-                       width="100%"
-                       height="auto"
-                       hidden
-                       x5-video-position="top"
-                       x5-video-orientation="portraint"
-                       x5-playsinline="true"
-                       webkit-playsinline="true"
-                       playsinline="true"
-                       x-webkit-airplay="true"
-                       oncanplay="setCurrentPlayTime(this)"
-                >
-                    你的浏览器不支持视频播放
-                </video>
-            </div>
-            <div class="audio-box" hidden>
-                <audio id="audio" src=""  controls="controls" loop="loop" preload="auto" preload x5-video-player-type="h5" x5-video-player-fullscreen="true" webkit-playsinline="true" playsinline="true">
-                    你的浏览器不支持音频播放
-                </audio>
-            </div>
-        </div>
-</div>
+<div class="abc">
+	<div id="videodiv" class="container">
+		<div id="output"></div>
+		<div class="weui-navbar">
+			<img id="topimg" class="top-img" src="" alt="加载中.." />
+			<!-- <div id="gab" style="display:none;position:absolute;"> p</div> -->
+			<div class="videobox">
+				<p class="video-info" style="white-space:nowrap;">正在播放。。。。</p>
+				<video id="video" src=""
+					   poster="images/default.png"
+					   controls="controls"
+					   preload="none"
+					   width="100%"
+					   height="auto"
+					   hidden
+					   x5-video-position="top"
+					   x5-video-orientation="portraint"
+					   x5-playsinline="true"
+					   webkit-playsinline="true"
+					   playsinline="true"
+					   x-webkit-airplay="true"
+					   oncanplay="setCurrentPlayTime(this)"
+				>
+					你的浏览器不支持视频播放
+				</video>
+			</div>
+			<div class="audio-box" hidden>
+				<audio id="audio" src=""  controls="controls" loop="loop" preload="auto" preload x5-video-player-type="h5" x5-video-player-fullscreen="true" webkit-playsinline="true" playsinline="true">
+					你的浏览器不支持音频播放
+				</audio>
+			</div>
+		</div>
+	</div>
 
 
     <div class="no-tip" hidden>暂无课程</div>
