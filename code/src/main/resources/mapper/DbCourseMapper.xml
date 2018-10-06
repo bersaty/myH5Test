@@ -35,4 +35,14 @@
     from db_course as c
     where  c.type = #{type} order by orderid ASC
   </select>
+
+  <update id="updateOrderIdBigger">
+    UPDATE db_course as c SET c.orderid = c.orderid - 1
+    where c.orderid &gt; #{oldId,jdbcType=INTEGER} and c.orderid &lt;= #{newId,jdbcType=INTEGER} and c.type = #{type,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateOrderIdLess">
+    UPDATE db_course as c SET c.orderid = c.orderid + 1
+    where c.orderid &gt;= #{newId,jdbcType=INTEGER} and c.orderid &lt; #{oldId,jdbcType=INTEGER} and c.type = #{type,jdbcType=INTEGER}
+  </update>
 </mapper>

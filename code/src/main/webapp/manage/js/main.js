@@ -451,6 +451,7 @@ function main() {
                 console.log(" disable confirm ")
                 $(".confirm").attr("disabled",null)
                 if(course.type == 0 || course.type == 1) {
+                    console.log(" open lesson dialog url = "+lesson.content)
                     document.getElementById("video").src = lesson.content
                     document.getElementById("video2").src = lesson.content
 
@@ -526,6 +527,7 @@ function main() {
             if (typeof(course) != "undefined") {
                 course = JSON.parse(course)
                 lesson.cid = course.id
+                lesson.type = parseInt(course.type)
             }else {
                 log("course 没定义 ")
                 return
@@ -923,6 +925,7 @@ function main() {
                 //得到多媒体文件时长
                 var video = file;
                 var url = URL.createObjectURL(video);
+                console.log(" upload file url = "+url)
                 document.getElementById("video").src = url
                 document.getElementById("video2").src = url
                 // $(".confirm").removeAttr("disabled")

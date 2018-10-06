@@ -1,3 +1,7 @@
+body{
+    background: rgb(242,240,227);
+}
+
 .container{
     width: 100%;
     display: flex;
@@ -41,7 +45,7 @@
 
 .videobox{
     /* margin-top: 6.1rem; */
-    background-color:white;
+    background: rgb(242,240,227);
     position: fixed;
     z-index: 500;
     border-bottom: 1px solid #e5e5e5;

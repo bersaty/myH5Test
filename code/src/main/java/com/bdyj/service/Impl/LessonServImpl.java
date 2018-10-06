@@ -19,6 +19,8 @@ public class LessonServImpl implements LessonServ {
 
     @Override
     public void insertLesson(DbLesson lesson){
+        System.out.println(" lessonServImpl insertLesson name = "+lesson.getName()+" type = "+lesson.getType());
+
         lessonMapper.insert(lesson);
     }
 

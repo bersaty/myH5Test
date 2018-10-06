@@ -3,9 +3,9 @@
 <mapper namespace="com.bdyj.dao.DbLessonMapper">
     <insert id="insert" parameterType="DbLesson">
     insert into db_lesson (id, cid, name, 
-      duration, content)
+      duration, content,type)
     values (#{id,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
-      #{duration,jdbcType=REAL}, #{content,jdbcType=LONGVARCHAR})
+      #{duration,jdbcType=REAL}, #{content,jdbcType=LONGVARCHAR},#{type,jdbcType=INTEGER})
   </insert>
 
     <update id="update" parameterType="DbLesson">
@@ -22,6 +22,9 @@
             </if>
             <if test="content != null">
                 l.content = #{content}
+            </if>
+            <if test="type != null">
+                l.type = #{type}
             </if>
         </set>
         where l.id = #{id}

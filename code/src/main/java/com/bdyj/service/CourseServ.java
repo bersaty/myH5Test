@@ -11,4 +11,7 @@ public interface CourseServ {
     void delCourse(DbCourse course);
     List<DbCourse> getAllCourse();
     DbCourse getCourseById(int id);
+//    Boolean updateOrderIdBigger(int newId,int oldId);//更新位置变大
+//    Boolean updateOrderIdLess(int newId,int oldId);//更新位置变小
+
 }

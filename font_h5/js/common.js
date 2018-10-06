@@ -62,11 +62,13 @@ var client = new OSS.Wrapper({
     bucket: Common.bucket
   });
 
-  var objectList;
-  var folderList;
+  var itemList;
+  var menuList;
+  var categoryList;
   var coverList = [];
 
   var default_img = 'images/default.png';
+
 
 /**
  * 获取 banner图片
@@ -103,4 +105,38 @@ function coverImage(tabNum) {
     //   .catch(function (err) {
         // weuiAlert("coverImage"+err);
     //   });
+}
+
+/**
+ * 获取一级列表
+ */
+function getCategoryList(xml) {
+    return xml.getElementsByTagName("category")
+
+}
+
+/**
+ * 获取category里的menu列表
+ */
+function getMenuListInCategory(xml) {
+    return xml.getElementsByTagName("menu")
+}
+
+/**
+ * 获取item
+ */
+function getItemListInMenu(xml) {
+    return xml.getElementsByTagName("item")
+}
+
+function getName(dom) {
+    return dom.getAttribute("name")
+}
+
+function getImg(dom) {
+    return dom.getAttribute("img")
+}
+
+function getUrl(dom) {
+    return dom.getAttribute("url")
 }
