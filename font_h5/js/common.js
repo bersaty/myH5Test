@@ -49,8 +49,8 @@ function weuiHideLoading() {
 var Common = {
     DOMAIN:"https://daanfs.donglin.org/",
     region:'oss-cn-hangzhou',
-    accessKeyId:'LTAIiuhWCwxva6fj',
-    accessKeySecret:'K4RvAODulR31QkBaexN256brxccXX2',
+    accessKeyId:'',
+    accessKeySecret:'',
     bucket:'daanfashi'
 }
 
